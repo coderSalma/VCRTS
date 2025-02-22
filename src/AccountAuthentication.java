@@ -12,7 +12,7 @@ public class AccountAuthentication {
 			String[] line = input.split(",");
 			String tempUserName = line[1];
 			String tempPassword = line[2];
-			boolean tempType = parseBoolean(line[3]);
+			boolean tempType = Boolean.parseBoolean(line[3]);
 			Account tempAccount = new Account(tempUserName,tempPassword,tempType);
 			//creates a temp account to compare the input account to
 			//need to change this into the INPUT account
@@ -32,9 +32,5 @@ public class AccountAuthentication {
 		}
 	}
 
-	private static boolean parseBoolean(String string) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 }
