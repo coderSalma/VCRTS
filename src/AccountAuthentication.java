@@ -4,10 +4,10 @@ import java.util.*;
 public class AccountAuthentication {
 	public static void authenticateAccount(){
 		boolean authenticated = false;
-		FileReader reader = new FileReader("Accounts.csv");
-		BufferedReader buffer = new BufferedReader(reader);
+		try (FileReader reader = new FileReader("Accounts.csv");
+		BufferedReader buffer = new BufferedReader(reader)) {
 		String input = buffer.readLine();
-		while(input!=null & authenticated!=true) {
+		while(input!=null && !authenticated) {
 			//goes until the end of the account authentication file or until it finds a match
 			String[] line = input.split(",");
 			String tempUserName = line[1];
@@ -16,7 +16,7 @@ public class AccountAuthentication {
 			Account tempAccount = new Account(tempUserName,tempPassword,tempType);
 			//creates a temp account to compare the input account to
 			//need to change this into the INPUT account
-			if (Account.getUsername() == tempAccount.getUsername() & Account.getPassword() == tempAccount.getPassword()) {
+			if (Account.getUsername() == tempAccount.getUsername() & AbstractMapccount.getPassword() == tempAccount.getPassword()) {
 				authenticated = true;
 				if (tempAccount.getAccountType() == true) {
 					//go to car owner
@@ -26,6 +26,7 @@ public class AccountAuthentication {
 				}
 			}
 		}
+	}
 		if (authenticated=false) {
 			System.out.println("Wrong login info. Try again or create an account");
 		}
