@@ -7,9 +7,6 @@ import java.util.Date;
 
 public class JobOwner {
 
-    public static void main(String[] args) {
-        new MainMenuScreen();
-    }
     private String username;
     private int jobID;
     private int jobDuration;
@@ -17,10 +14,9 @@ public class JobOwner {
     private String jobInfo;
     private String jobDeadline;
 
-    public JobOwner() {
-    }
-    public JobOwner(String inputUsername) {
-    	this.username = inputUsername;
+    public JobOwner(String username) { // Added username parameter
+        this.username = username;
+        new MainMenuScreen(username);
     }
 
     public JobOwner(int jobID, int jobDuration, String jobName, String jobInfo, String jobDeadline) {
@@ -31,44 +27,36 @@ public class JobOwner {
         this.jobDeadline = jobDeadline;
     }
 
-    private static void saveJobToCSV(int jobID, String jobName, String jobInfo, int jobDuration, String jobDeadline) {
+    private void saveJobToCSV(int jobID, String jobName, String jobInfo, int jobDuration, String jobDeadline) {
         String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         String fileName = username + "Jobs.csv";  
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
-            writer.write( jobID + "," + jobName + "," + jobInfo + "," + jobDuration + "," + jobDeadline + "," + timestamp);
+            writer.write(jobID + "," + jobName + "," + jobInfo + "," + jobDuration + "," + jobDeadline + "," + timestamp);
             writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    //abbygayles code
-    //reads jobs from CSV, then passes them to GUI
-    private void readJobFromCSV(int jobID,String jobName, String jobInfo, int JobDuration, String jobDeadline) {
-    	//need some way to reference username
-    	String fileName = username + "Jobs.csv";
-    	//
-		try {
-			FileReader reader = new FileReader(fileName);
-	    	BufferedReader buffer = new BufferedReader(reader);
-	    	String pulledJob = buffer.readLine();
-	    	while (pulledJob !=null) {
-	    		String[] readJob = pulledJob.split(",");
-	    		int tempID = Integer.parseInt(readJob[0]);
-	    		String tempName = readJob[1];
-	    		String tempInfo = readJob[2];
-	    		int tempDuration = Integer.parseInt(readJob[3]);
-	    		String tempDeadline = readJob[4];
-	    		JobOwner CSVJob = new JobOwner(tempID, tempDuration, tempInfo, tempName, tempDeadline);
-	    		//create a new job
-	    		//add that job to the GUI
-	    	}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-    	
+    private void readJobFromCSV() {
+        String fileName = username + "Jobs.csv";
+
+        try (BufferedReader buffer = new BufferedReader(new FileReader(fileName))) {
+            String pulledJob;
+            while ((pulledJob = buffer.readLine()) != null) {
+                String[] readJob = pulledJob.split(",");
+                int tempID = Integer.parseInt(readJob[0]);
+                String tempName = readJob[1];
+                String tempInfo = readJob[2];
+                int tempDuration = Integer.parseInt(readJob[3]);
+                String tempDeadline = readJob[4];
+                JobOwner CSVJob = new JobOwner(tempID, tempDuration, tempName, tempInfo, tempDeadline);
+                // Create a new job and add it to the GUI here
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //Screen for the main menu, options will be New Job, Old Jobs, Current Jobs as buttons
@@ -78,7 +66,7 @@ public class JobOwner {
         private JLabel mainMenuLabel;
         private JPanel panel;
 
-        public MainMenuScreen() {
+        public MainMenuScreen(String username) { // Updated constructor
             frame = new JFrame("Select Job Option");
             frame.setSize(400, 300);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -108,17 +96,17 @@ public class JobOwner {
 
             newJobButton.addActionListener(e -> {
                 frame.dispose();
-                new NewJobScreen();
+                new NewJobScreen(username); // Pass username
             });
 
             oldJobButton.addActionListener(e -> {
                 frame.dispose();
-                new OldJobScreen();
+                new OldJobScreen(username); // Pass username
             });
 
             currentJobButton.addActionListener(e -> {
                 frame.dispose();
-                new CurrentJobScreen();
+                new CurrentJobScreen(username); // Pass username
             });
 
             panel.add(mainMenuLabel);
@@ -134,16 +122,17 @@ public class JobOwner {
         }
     }
 
-    //Prompts the Job Owner for Information about the Job. There is a submit button
-    //and a back button. Multiple jobs can be submitted at once. 
+    // Prompts the Job Owner for Information about the Job
     public static class NewJobScreen {
         private JFrame frame;
         private JLabel instructions, jobNameLabel, jobInfoLabel, timeMinLabel, jobDeadlineLabel;
         private JTextField jobNameField, jobInfoField, timeMinField, jobDeadlineField;
         private JButton submitJobButton, backButton;
         private JPanel panel;
+        private String username;
 
-        public NewJobScreen() {
+        public NewJobScreen(String username) { // Added username parameter
+            this.username = username;
             frame = new JFrame("New Job Submission");
             frame.setSize(500, 500);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -189,8 +178,7 @@ public class JobOwner {
                 int newTimeMin = Integer.parseInt(timeMinField.getText());
 
                 JobOwner newJob = new JobOwner(newJobID, newTimeMin, newJobName, newJobInfo, newJobDeadline);
-
-                saveJobToCSV(newJobID, newJobName, newJobInfo, newTimeMin, newJobDeadline);
+                newJob.saveJobToCSV(newJobID, newJobName, newJobInfo, newTimeMin, newJobDeadline);
 
                 JOptionPane.showMessageDialog(frame, "Job Saved Successfully!");
 
@@ -202,7 +190,7 @@ public class JobOwner {
 
             backButton.addActionListener(e -> {
                 frame.dispose();
-                new MainMenuScreen();
+                new MainMenuScreen(username); // Pass username
             });
 
             panel.add(instructions);
@@ -221,6 +209,7 @@ public class JobOwner {
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
             panel.add(submitJobButton);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
+
             panel.add(backButton);
 
             frame.add(panel, BorderLayout.CENTER);
@@ -234,7 +223,7 @@ public class JobOwner {
         private JLabel oldJobLabel;
         private JPanel panel;
 
-        public OldJobScreen() {
+        public OldJobScreen(String username) {
             frame = new JFrame("Old Job");
             frame.setSize(400, 200);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -265,7 +254,7 @@ public class JobOwner {
         private JLabel currentJobLabel;
         private JPanel panel;
 
-        public CurrentJobScreen() {
+        public CurrentJobScreen(String username) {
             frame = new JFrame("Current Job(s)");
             frame.setSize(400, 200);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
