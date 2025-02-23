@@ -318,7 +318,6 @@ public class VehicleOwner {
     }
     
     // View Vehicle Screen - prompts for Owner ID and Vehicle ID to display details.
-    // In this example, it simply displays a message. In a complete application, you would retrieve and display the record.
     public static class ViewVehicleScreen {
         private JFrame frame;
         private JLabel instructions, ownerIDLabel, vehicleIDLabel;
