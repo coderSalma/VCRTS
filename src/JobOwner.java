@@ -76,7 +76,7 @@ public class JobOwner {
 			oldJobButton = new JButton("Old Job(s)");
 			currentJobButton = new JButton("Current Job(s)");
 
-			Dimension buttonSize = new Dimension(150, 30);
+			Dimension buttonSize = new Dimension(120, 30);
 			newJobButton.setMaximumSize(buttonSize);
 			oldJobButton.setMaximumSize(buttonSize);
 			currentJobButton.setMaximumSize(buttonSize);
@@ -164,8 +164,8 @@ public class JobOwner {
 
 			submitJobButton = new JButton("Submit");
 			backButton = new JButton("Back");
-			panel.add(submitJobButton);
 			panel.add(backButton);
+			panel.add(submitJobButton);
 
 			// Button Action Listeners
 			submitJobButton.addActionListener(e -> {

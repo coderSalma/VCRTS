@@ -117,7 +117,7 @@ public class VehicleOwner {
 
         public NewVehicleScreen() {
             frame = new JFrame("New Vehicle Submission");
-            frame.setSize(500, 500);
+            frame.setSize(600, 500);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
 
@@ -129,33 +129,74 @@ public class VehicleOwner {
             instructions.setFont(new Font("Times New Roman", Font.BOLD, 16));
             instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+            //owner id panel
             ownerIDLabel = new JLabel("Owner ID:");
-            ownerIDLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
-            ownerIDField = new JTextField(20);
-            ownerIDField.setMaximumSize(new Dimension(400, 30));
-
+            ownerIDLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+            ownerIDField = new JTextField();
+            ownerIDField.setMaximumSize(new Dimension(800, 30));
+            ownerIDField.setPreferredSize(new Dimension(250, 30));
+      
+            JPanel ownerIDPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            ownerIDLabel.setPreferredSize(new Dimension(250, 30));
+            ownerIDPanel.add(ownerIDLabel);
+            ownerIDPanel.add(ownerIDField);
+            
+            //vehicle id panel
             vehicleIDLabel = new JLabel("Vehicle ID:");
-            vehicleIDLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
-            vehicleIDField = new JTextField(20);
-            vehicleIDField.setMaximumSize(new Dimension(400, 30));
+            vehicleIDLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+            vehicleIDField = new JTextField();
+            vehicleIDField.setMaximumSize(new Dimension(800, 30));
+            vehicleIDField.setPreferredSize(new Dimension(250, 30));
 
+            JPanel vehicleIDPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            vehicleIDLabel.setPreferredSize(new Dimension(250, 30));
+            vehicleIDPanel.add(vehicleIDLabel);
+            vehicleIDPanel.add(vehicleIDField);
+
+            //model panel
             modelLabel = new JLabel("Model:");
-            modelLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
-            modelField = new JTextField(20);
-            modelField.setMaximumSize(new Dimension(400, 30));
+            modelLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+            modelField = new JTextField();
+            modelField.setMaximumSize(new Dimension(800, 30));
+            modelField.setPreferredSize(new Dimension(250, 30));
+ 
+            JPanel modelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            modelLabel.setPreferredSize(new Dimension(250, 20));
+            modelPanel.add(modelLabel);
+            modelPanel.add(modelField);
 
+            //vin panel
             vinLabel = new JLabel("VIN:");
-            vinLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
-            vinField = new JTextField(20);
-            vinField.setMaximumSize(new Dimension(400, 30));
+            vinLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+            vinField = new JTextField();
+            vinField.setMaximumSize(new Dimension(800, 30));
+            vinField.setPreferredSize(new Dimension(250, 20));
 
+            JPanel vinPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            vinLabel.setPreferredSize(new Dimension(250, 30));
+            vinPanel.add(vinLabel);
+            vinPanel.add(vinField);
+            
+            //residency panel
             residencyTimeLabel = new JLabel("Residency Time (hrs):");
-            residencyTimeLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
-            residencyTimeField = new JTextField(5);
-            residencyTimeField.setMaximumSize(new Dimension(400, 30));
+            residencyTimeLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+            residencyTimeField = new JTextField();
+            residencyTimeField.setMaximumSize(new Dimension(800, 30));
+            residencyTimeField.setPreferredSize(new Dimension(250, 30));
 
+            JPanel residencyTimePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            residencyTimeLabel.setPreferredSize(new Dimension(250, 30));
+            residencyTimePanel.add(residencyTimeLabel);
+            residencyTimePanel.add(residencyTimeField);
+
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
             submitButton = new JButton("Submit");
             backButton = new JButton("Back");
+            buttonPanel.add(backButton);
+            buttonPanel.add(submitButton);
+            panel.add(buttonPanel);
+
 
             submitButton.addActionListener(e -> {
                 String ownerID = ownerIDField.getText().trim();
@@ -188,20 +229,15 @@ public class VehicleOwner {
 
             panel.add(instructions);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
-            panel.add(ownerIDLabel);
-            panel.add(ownerIDField);
+            panel.add(ownerIDPanel);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(vehicleIDLabel);
-            panel.add(vehicleIDField);
+            panel.add(vehicleIDPanel);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(modelLabel);
-            panel.add(modelField);
+            panel.add(modelPanel);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(vinLabel);
-            panel.add(vinField);
+            panel.add(vinPanel);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(residencyTimeLabel);
-            panel.add(residencyTimeField);
+            panel.add(residencyTimePanel);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
             panel.add(submitButton);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
