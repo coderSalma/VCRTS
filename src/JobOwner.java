@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 
 public class JobOwner {
@@ -39,8 +41,9 @@ public class JobOwner {
         }
     }
 
-    private void readJobFromCSV() {
+    public List<JobOwner> readJobFromCSV() { // Made public and return List<JobOwner>
         String fileName = username + "Jobs.csv";
+        List<JobOwner> jobs = new ArrayList<>();
 
         try (BufferedReader buffer = new BufferedReader(new FileReader(fileName))) {
             String pulledJob;
@@ -52,11 +55,12 @@ public class JobOwner {
                 int tempDuration = Integer.parseInt(readJob[3]);
                 String tempDeadline = readJob[4];
                 JobOwner CSVJob = new JobOwner(tempID, tempDuration, tempName, tempInfo, tempDeadline);
-                // Create a new job and add it to the GUI here
+                jobs.add(CSVJob); // Add job to the list
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return jobs;
     }
 
     //Screen for the main menu, options will be New Job, Old Jobs, Current Jobs as buttons
