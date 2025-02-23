@@ -5,9 +5,10 @@
  * */
 
  import java.awt.*;
+ import java.awt.event.*;
  import javax.swing.*;
  
- public class Login extends JFrame //implements ActionListener
+ public class Login extends JFrame implements ActionListener
  {
      JButton loginButton;
      JLabel userLabel, passwordLabel;
@@ -56,12 +57,12 @@
         loginButton.setBounds(150, 130, 90, 25);
         loginButton.setPreferredSize(new Dimension(140, 30));
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        //loginButton.addActionListener(this);  
+        loginButton.addActionListener(this);  
         add(loginButton); 
      }
  
+     //initial testing of login button using array of accounts 
      /**
-    
      @Override
      public void actionPerformed(ActionEvent e) {
          String inputName = username.getText();
@@ -77,6 +78,21 @@
  
          
      }*/
+   
+     //call account auth class and close login window after when login clicked      
+     @Override
+     public void actionPerformed(ActionEvent e) {
+         String inputName = username.getText();
+         String inputPass = new String(password.getPassword());
+
+         if (AccountAuthentication.authenticateAccount(inputName, inputPass)) {
+             JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + inputName);
+             dispose();
+             //link to job owner page or vehicle owner page
+         } else {
+             JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Failed", JOptionPane.ERROR_MESSAGE);
+         }
+     }
  
  
  }
