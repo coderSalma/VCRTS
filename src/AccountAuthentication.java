@@ -4,7 +4,7 @@ import java.util.*;
 public class AccountAuthentication {
     public static boolean authenticateAccount(String inputUsername, String inputPassword) {
         boolean authenticated = false;
-        try (FileReader reader = new FileReader("Accounts.csv");
+        try (FileReader reader = new FileReader("src/Accounts.csv");
              BufferedReader buffer = new BufferedReader(reader)) {
             String input = buffer.readLine();
             while (input != null && !authenticated) {
