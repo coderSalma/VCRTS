@@ -88,7 +88,7 @@
          if (AccountAuthentication.authenticateAccount(inputName, inputPass)) {
              JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + inputName);
              dispose();
-             //link to job owner page or vehicle owner page
+             
          } else {
              JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Failed", JOptionPane.ERROR_MESSAGE);
          }

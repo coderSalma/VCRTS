@@ -21,9 +21,11 @@ public class AccountAuthentication {
                     if (tempType) {
                         System.out.println("Welcome, Vehicle Owner!");
                         // Redirect to vehicle owner page
+                        new VehicleOwner();
                     } else {
                         System.out.println("Welcome, Job Owner!");
                         // Redirect to job owner page
+                        new JobOwner();
                     }
                 }
                 input = buffer.readLine();
