@@ -10,7 +10,7 @@
  
  public class Login extends JFrame implements ActionListener
  {
-     JButton loginButton;
+     JButton loginButton, backButton;
      JLabel userLabel, passwordLabel;
      JTextField username;
      JPasswordField password;
@@ -59,6 +59,15 @@
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginButton.addActionListener(this);  
         add(loginButton); 
+        
+        //back button to initial screen
+        backButton = new JButton("Back");
+        backButton.setBounds(50, 200, 90, 25);
+        backButton.addActionListener(e -> {
+            dispose();
+            new InitialScreen();
+        });
+        add(backButton);
      }
  
      //initial testing of login button using array of accounts 

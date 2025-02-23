@@ -11,7 +11,7 @@ public class Signup extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JComboBox<String> accountTypeComboBox;
-    private JButton signupButton;
+    private JButton signupButton, backButton;
 
     public Signup() {
         // Create frame
@@ -80,6 +80,15 @@ public class Signup extends JFrame {
                 }
             }
         });
+        
+        //back button to initial screen
+        backButton = new JButton("Back");
+        backButton.setBounds(50, 200, 90, 25);
+        backButton.addActionListener(e -> {
+            dispose();
+            new InitialScreen();
+        });
+        add(backButton);
     }
 
     // Check if the username already exists in Accounts.csv
