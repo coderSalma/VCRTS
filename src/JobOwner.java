@@ -40,6 +40,7 @@ public class JobOwner {
         }
     }
 
+    //Screen for the main menu, options will be New Job, Old Jobs, Current Jobs as buttons
     public static class MainMenuScreen {
         private JFrame frame;
         private JButton newJobButton, oldJobButton, currentJobButton;
@@ -102,6 +103,8 @@ public class JobOwner {
         }
     }
 
+    //Prompts the Job Owner for Information about the Job. There is a submit button
+    //and a back button. Multiple jobs can be submitted at once. 
     public static class NewJobScreen {
         private JFrame frame;
         private JLabel instructions, jobNameLabel, jobInfoLabel, timeMinLabel, jobDeadlineLabel;
@@ -194,6 +197,7 @@ public class JobOwner {
         }
     }
 
+    //OldJobScreen Should display a list of the old jobs (those marked as completed) or "There are no previous jobs"
     public static class OldJobScreen {
         private JFrame frame;
         private JLabel oldJobLabel;
@@ -221,6 +225,9 @@ public class JobOwner {
             frame.setVisible(true);
         }
     }
+
+   //This will display Current Jobs, the bills (whether they've been paid or not), the info they were prompted for when making the job
+   //And for now, whether or not the job is in progress or not
 
     public static class CurrentJobScreen {
         private JFrame frame;
