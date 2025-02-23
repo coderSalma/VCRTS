@@ -10,6 +10,11 @@ public class JobOwner {
     public static void main(String[] args) {
         new MainMenuScreen();
     }
+    
+    public static void getMainScreen()
+    {
+    	new MainMenuScreen();
+    }
 
     private int jobID;
     private int jobDuration;
@@ -52,12 +57,12 @@ public class JobOwner {
             frame.setSize(400, 300);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
-            frame.getContentPane().setBackground(new Color(204, 229, 255));
+            //frame.getContentPane().setBackground(new Color(204, 229, 255));
 
             panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-            panel.setBackground(new Color(204, 229, 255));
+            //panel.setBackground(new Color(204, 229, 255));
 
             mainMenuLabel = new JLabel("Welcome to the Job Management System", SwingConstants.CENTER);
             mainMenuLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
@@ -121,7 +126,7 @@ public class JobOwner {
             panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-            panel.setBackground(new Color(204, 229, 255));
+            //panel.setBackground(new Color(204, 229, 255));
 
             instructions = new JLabel("<html>Enter the details of the new job below:</html>", SwingConstants.CENTER);
             instructions.setFont(new Font("Times New Roman", Font.BOLD, 16));
@@ -208,12 +213,12 @@ public class JobOwner {
             frame.setSize(400, 200);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
-            frame.getContentPane().setBackground(new Color(204, 229, 255));
+            //frame.getContentPane().setBackground(new Color(204, 229, 255));
 
             panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-            panel.setBackground(new Color(204, 229, 255));
+            //panel.setBackground(new Color(204, 229, 255));
 
             oldJobLabel = new JLabel("Old Jobs will be here.", SwingConstants.CENTER);
             oldJobLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
@@ -239,12 +244,12 @@ public class JobOwner {
             frame.setSize(400, 200);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
-            frame.getContentPane().setBackground(new Color(204, 229, 255));
+            //frame.getContentPane().setBackground(new Color(204, 229, 255));
 
             panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-            panel.setBackground(new Color(204, 229, 255));
+            //panel.setBackground(new Color(204, 229, 255));
 
             currentJobLabel = new JLabel("Current Job(s) will be here.", SwingConstants.CENTER);
             currentJobLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
