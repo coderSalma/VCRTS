@@ -12,6 +12,7 @@ public class InitialScreen extends JFrame{
         setTitle("VCRTS - Vehicular Cloud Real Time System");
         setSize(400, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setVisible(true);
 
        //main panel

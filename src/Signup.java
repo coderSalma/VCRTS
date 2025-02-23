@@ -18,6 +18,7 @@ public class Signup extends JFrame {
         setTitle("VCRTS Portal Sign Up");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setLayout(null);
         setVisible(true);
 

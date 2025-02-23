@@ -8,7 +8,7 @@ public class VehicleOwner extends JFrame
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
-        
+        setLocationRelativeTo(null);
         setVisible(true);
 	}
     

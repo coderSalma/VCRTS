@@ -27,6 +27,7 @@
          setTitle("VCRTS Portal Login");
          setSize(400, 300);
          setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         setLocationRelativeTo(null);
          setLayout(null);
          setVisible(true);
         
