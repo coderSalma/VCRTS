@@ -10,7 +10,7 @@ public class JobOwner {
     public static void main(String[] args) {
         new MainMenuScreen();
     }
-
+    private String username;
     private int jobID;
     private int jobDuration;
     private String jobName;
@@ -18,6 +18,9 @@ public class JobOwner {
     private String jobDeadline;
 
     public JobOwner() {
+    }
+    public JobOwner(String inputUsername) {
+    	this.username = inputUsername;
     }
 
     public JobOwner(int jobID, int jobDuration, String jobName, String jobInfo, String jobDeadline) {
@@ -30,14 +33,42 @@ public class JobOwner {
 
     private static void saveJobToCSV(int jobID, String jobName, String jobInfo, int jobDuration, String jobDeadline) {
         String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        String fileName = "Jobs.csv";  
+        String fileName = username + "Jobs.csv";  
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
-            writer.write(jobID + "," + jobName + "," + jobInfo + "," + jobDuration + "," + jobDeadline + "," + timestamp);
+            writer.write( jobID + "," + jobName + "," + jobInfo + "," + jobDuration + "," + jobDeadline + "," + timestamp);
             writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    //abbygayles code
+    //reads jobs from CSV, then passes them to GUI
+    private void readJobFromCSV(int jobID,String jobName, String jobInfo, int JobDuration, String jobDeadline) {
+    	//need some way to reference username
+    	String fileName = username + "Jobs.csv";
+    	//
+		try {
+			FileReader reader = new FileReader(fileName);
+	    	BufferedReader buffer = new BufferedReader(reader);
+	    	String pulledJob = buffer.readLine();
+	    	while (pulledJob !=null) {
+	    		String[] readJob = pulledJob.split(",");
+	    		int tempID = Integer.parseInt(readJob[0]);
+	    		String tempName = readJob[1];
+	    		String tempInfo = readJob[2];
+	    		int tempDuration = Integer.parseInt(readJob[3]);
+	    		String tempDeadline = readJob[4];
+	    		JobOwner CSVJob = new JobOwner(tempID, tempDuration, tempInfo, tempName, tempDeadline);
+	    		//create a new job
+	    		//add that job to the GUI
+	    	}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+    	
     }
 
     //Screen for the main menu, options will be New Job, Old Jobs, Current Jobs as buttons
