@@ -10,9 +10,9 @@ public class AccountAuthentication {
             while (input != null && !authenticated) {
                 // Split the line into parts
                 String[] line = input.split(",");
-                String tempUsername = line[0];
-                String tempPassword = line[1];
-                boolean tempType = Boolean.parseBoolean(line[2]);
+                String tempUsername = line[1];
+                String tempPassword = line[2];
+                boolean tempType = Boolean.parseBoolean(line[3]);
 
                 // Compare input credentials with the temporary account
                 // below code was written by manasa srinivasa: 
@@ -21,7 +21,7 @@ public class AccountAuthentication {
                     if (tempType) {
                         System.out.println("Welcome, Vehicle Owner!");
                         // Redirect to vehicle owner page
-                        new VehicleOwner(inputUsername);
+                        new VehicleOwner();
                         //adding the username so it can be referenced to make a new file
                     } else {
                         System.out.println("Welcome, Job Owner!");
