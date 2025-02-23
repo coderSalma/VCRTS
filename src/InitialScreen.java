@@ -18,7 +18,7 @@ public class InitialScreen extends JFrame{
        panel = new JPanel();
        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-       panel.setBackground(new Color(204, 229, 255));
+       //panel.setBackground(new Color(204, 229, 255));
        
        //welcome message
        welcomeLabel = new JLabel("Welcome to the Vehicular Cloud Real Time System!", SwingConstants.CENTER);
@@ -49,13 +49,13 @@ public class InitialScreen extends JFrame{
         //open login page and close window
         logInButton.addActionListener(e -> 
         {
-            //new Login(); 
+            new Login();
             dispose(); 
         });
-
+        
         //open sign up page and close window
         signUpButton.addActionListener(e -> {
-            //new Signup();
+        	new Signup();
             dispose();
         });
 
