@@ -264,7 +264,8 @@ public class JobOwner {
 
 			backButton.addActionListener(e -> {
 				frame.dispose();
-				new MainMenuScreen();
+				//new MainMenuScreen();
+				new JobOwner(username);
 			});
 		}
 	}
@@ -300,7 +301,8 @@ public class JobOwner {
 
 			backButton.addActionListener(e -> {
 				frame.dispose();
-				new MainMenuScreen();
+				//new MainMenuScreen();
+				new JobOwner(username);
 			});
 			frame.add(panel, BorderLayout.CENTER);
 			frame.setVisible(true);
