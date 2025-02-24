@@ -1,6 +1,5 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,7 +14,7 @@ public class VehicleOwner {
         new MainMenuScreen();
     }
     
-    // Fields for a vehicle record
+    // Instance fields for vehicle details
     private String ownerID;
     private String vehicleID;
     private String model;
@@ -37,7 +36,6 @@ public class VehicleOwner {
     private static void saveVehicleToCSV(String ownerID, String vehicleID, String model, String vin, int residencyTime) {
         String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         String fileName = "Vehicles.csv";  
-
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
             writer.write(ownerID + "," + vehicleID + "," + model + "," + vin + "," + residencyTime + "," + timestamp);
             writer.newLine();
@@ -46,54 +44,54 @@ public class VehicleOwner {
         }
     }
     
-    // Main Menu Screen for Vehicle Owner Options
+    // ----------------------- Main Menu Screen -----------------------
     public static class MainMenuScreen {
         private JFrame frame;
         private JButton newVehicleButton, updateVehicleButton, viewVehicleButton;
         private JLabel mainMenuLabel;
         private JPanel panel;
-
+        
         public MainMenuScreen() {
             frame = new JFrame("Select Vehicle Option");
             frame.setSize(400, 300);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
-
+            
             panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
+            
             mainMenuLabel = new JLabel("Welcome to the Vehicle Management System", SwingConstants.CENTER);
-            mainMenuLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
+            mainMenuLabel.setFont(new Font("Serif", Font.BOLD, 16));
             mainMenuLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+            
             newVehicleButton = new JButton("New Vehicle");
             updateVehicleButton = new JButton("Update Vehicle");
             viewVehicleButton = new JButton("View Vehicle");
-
+            
             newVehicleButton.setPreferredSize(new Dimension(140, 30));
             updateVehicleButton.setPreferredSize(new Dimension(140, 30));
             viewVehicleButton.setPreferredSize(new Dimension(140, 30));
-
+            
             newVehicleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             updateVehicleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             viewVehicleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+            
             newVehicleButton.addActionListener(e -> {
                 frame.dispose();
                 new NewVehicleScreen();
             });
-
+            
             updateVehicleButton.addActionListener(e -> {
                 frame.dispose();
                 new UpdateVehicleScreen();
             });
-
+            
             viewVehicleButton.addActionListener(e -> {
                 frame.dispose();
                 new ViewVehicleScreen();
             });
-
+            
             panel.add(mainMenuLabel);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
             panel.add(newVehicleButton);
@@ -101,62 +99,74 @@ public class VehicleOwner {
             panel.add(updateVehicleButton);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
             panel.add(viewVehicleButton);
-
+            
             frame.add(panel, BorderLayout.CENTER);
             frame.setVisible(true);
         }
     }
     
-    // New Vehicle Screen - prompts the owner for vehicle details
+    // ----------------------- New Vehicle Screen -----------------------
     public static class NewVehicleScreen {
         private JFrame frame;
         private JLabel instructions, ownerIDLabel, vehicleIDLabel, modelLabel, vinLabel, residencyTimeLabel;
         private JTextField ownerIDField, vehicleIDField, modelField, vinField, residencyTimeField;
         private JButton submitButton, backButton;
         private JPanel panel;
-
+        
         public NewVehicleScreen() {
             frame = new JFrame("New Vehicle Submission");
             frame.setSize(500, 500);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
-
+            
             panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
+            
             instructions = new JLabel("<html>Enter the details of your vehicle below:</html>", SwingConstants.CENTER);
-            instructions.setFont(new Font("Times New Roman", Font.BOLD, 16));
+            instructions.setFont(new Font("Serif", Font.BOLD, 16));
             instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+            
             ownerIDLabel = new JLabel("Owner ID:");
-            ownerIDLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
+            ownerIDLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            ownerIDLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             ownerIDField = new JTextField(20);
             ownerIDField.setMaximumSize(new Dimension(400, 30));
-
+            ownerIDField.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
             vehicleIDLabel = new JLabel("Vehicle ID:");
-            vehicleIDLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
+            vehicleIDLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            vehicleIDLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             vehicleIDField = new JTextField(20);
             vehicleIDField.setMaximumSize(new Dimension(400, 30));
-
+            vehicleIDField.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
             modelLabel = new JLabel("Model:");
-            modelLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
+            modelLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            modelLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             modelField = new JTextField(20);
             modelField.setMaximumSize(new Dimension(400, 30));
-
+            modelField.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
             vinLabel = new JLabel("VIN:");
-            vinLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
+            vinLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            vinLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             vinField = new JTextField(20);
             vinField.setMaximumSize(new Dimension(400, 30));
-
+            vinField.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
             residencyTimeLabel = new JLabel("Residency Time (hrs):");
-            residencyTimeLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
+            residencyTimeLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            residencyTimeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             residencyTimeField = new JTextField(5);
             residencyTimeField.setMaximumSize(new Dimension(400, 30));
-
+            residencyTimeField.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
             submitButton = new JButton("Submit");
+            submitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             backButton = new JButton("Back");
-
+            backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
             submitButton.addActionListener(e -> {
                 String ownerID = ownerIDField.getText().trim();
                 String vehicleID = vehicleIDField.getText().trim();
@@ -169,23 +179,22 @@ public class VehicleOwner {
                     JOptionPane.showMessageDialog(frame, "Residency Time must be an integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
-                // Save vehicle details to CSV
+                
                 saveVehicleToCSV(ownerID, vehicleID, model, vin, residencyTime);
                 JOptionPane.showMessageDialog(frame, "Vehicle Saved Successfully!");
-
+                
                 ownerIDField.setText("");
                 vehicleIDField.setText("");
                 modelField.setText("");
                 vinField.setText("");
                 residencyTimeField.setText("");
             });
-
+            
             backButton.addActionListener(e -> {
                 frame.dispose();
                 new MainMenuScreen();
             });
-
+            
             panel.add(instructions);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
             panel.add(ownerIDLabel);
@@ -206,62 +215,74 @@ public class VehicleOwner {
             panel.add(submitButton);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
             panel.add(backButton);
-
+            
             frame.add(panel, BorderLayout.CENTER);
             frame.setVisible(true);
         }
     }
     
-    // Update Vehicle Screen - allows the owner to update an existing vehicle record.
+    // ----------------------- Update Vehicle Screen -----------------------
     public static class UpdateVehicleScreen {
         private JFrame frame;
         private JLabel instructions, ownerIDLabel, vehicleIDLabel, modelLabel, vinLabel, residencyTimeLabel;
         private JTextField ownerIDField, vehicleIDField, modelField, vinField, residencyTimeField;
         private JButton updateButton, backButton;
         private JPanel panel;
-
+        
         public UpdateVehicleScreen() {
             frame = new JFrame("Update Vehicle Information");
             frame.setSize(500, 500);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
-
+            
             panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
+            
             instructions = new JLabel("<html>Enter the updated details of your vehicle below:</html>", SwingConstants.CENTER);
-            instructions.setFont(new Font("Times New Roman", Font.BOLD, 16));
+            instructions.setFont(new Font("Serif", Font.BOLD, 16));
             instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+            
             ownerIDLabel = new JLabel("Owner ID:");
-            ownerIDLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
+            ownerIDLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            ownerIDLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             ownerIDField = new JTextField(20);
             ownerIDField.setMaximumSize(new Dimension(400, 30));
-
+            ownerIDField.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
             vehicleIDLabel = new JLabel("Vehicle ID:");
-            vehicleIDLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
+            vehicleIDLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            vehicleIDLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             vehicleIDField = new JTextField(20);
             vehicleIDField.setMaximumSize(new Dimension(400, 30));
-
+            vehicleIDField.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
             modelLabel = new JLabel("Model:");
-            modelLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
+            modelLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            modelLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             modelField = new JTextField(20);
             modelField.setMaximumSize(new Dimension(400, 30));
-
+            modelField.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
             vinLabel = new JLabel("VIN:");
-            vinLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
+            vinLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            vinLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             vinField = new JTextField(20);
             vinField.setMaximumSize(new Dimension(400, 30));
-
+            vinField.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
             residencyTimeLabel = new JLabel("Residency Time (hrs):");
-            residencyTimeLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
+            residencyTimeLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            residencyTimeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             residencyTimeField = new JTextField(5);
             residencyTimeField.setMaximumSize(new Dimension(400, 30));
-
+            residencyTimeField.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
             updateButton = new JButton("Update");
+            updateButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             backButton = new JButton("Back");
-
+            backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
             updateButton.addActionListener(e -> {
                 String ownerID = ownerIDField.getText().trim();
                 String vehicleID = vehicleIDField.getText().trim();
@@ -274,23 +295,22 @@ public class VehicleOwner {
                     JOptionPane.showMessageDialog(frame, "Residency Time must be an integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
-                // Save updated vehicle details to CSV
+                
                 saveVehicleToCSV(ownerID, vehicleID, model, vin, residencyTime);
                 JOptionPane.showMessageDialog(frame, "Vehicle Updated Successfully!");
-
+                
                 ownerIDField.setText("");
                 vehicleIDField.setText("");
                 modelField.setText("");
                 vinField.setText("");
                 residencyTimeField.setText("");
             });
-
+            
             backButton.addActionListener(e -> {
                 frame.dispose();
                 new MainMenuScreen();
             });
-
+            
             panel.add(instructions);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
             panel.add(ownerIDLabel);
@@ -311,58 +331,95 @@ public class VehicleOwner {
             panel.add(updateButton);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
             panel.add(backButton);
-
+            
             frame.add(panel, BorderLayout.CENTER);
             frame.setVisible(true);
         }
     }
     
-    // View Vehicle Screen - prompts for Owner ID and Vehicle ID to display details.
+    // ----------------------- View Vehicle Screen -----------------------
+    // Reads the CSV file ("Vehicles.csv") and displays all details (owner ID, vehicle ID, model, VIN, residency time, timestamp)
     public static class ViewVehicleScreen {
         private JFrame frame;
         private JLabel instructions, ownerIDLabel, vehicleIDLabel;
         private JTextField ownerIDField, vehicleIDField;
         private JButton viewButton, backButton;
         private JPanel panel;
-
+        
         public ViewVehicleScreen() {
             frame = new JFrame("View Vehicle Information");
-            frame.setSize(400, 300);
+            frame.setSize(400, 350);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
-
+            
             panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
+            
             instructions = new JLabel("<html>Enter the Owner ID and Vehicle ID to view details:</html>", SwingConstants.CENTER);
-            instructions.setFont(new Font("Times New Roman", Font.BOLD, 16));
+            instructions.setFont(new Font("Serif", Font.BOLD, 16));
             instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+            
             ownerIDLabel = new JLabel("Owner ID:");
-            ownerIDLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
+            ownerIDLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            ownerIDLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             ownerIDField = new JTextField(20);
             ownerIDField.setMaximumSize(new Dimension(400, 30));
-
+            ownerIDField.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
             vehicleIDLabel = new JLabel("Vehicle ID:");
-            vehicleIDLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
+            vehicleIDLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            vehicleIDLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             vehicleIDField = new JTextField(20);
             vehicleIDField.setMaximumSize(new Dimension(400, 30));
-
+            vehicleIDField.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
             viewButton = new JButton("View");
+            viewButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             backButton = new JButton("Back");
-
+            backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
             viewButton.addActionListener(e -> {
-                String ownerID = ownerIDField.getText().trim();
-                String vehicleID = vehicleIDField.getText().trim();
-                JOptionPane.showMessageDialog(frame, "Displaying details for Vehicle ID: " + vehicleID + " of Owner ID: " + ownerID);
+                String searchOwner = ownerIDField.getText().trim();
+                String searchVehicle = vehicleIDField.getText().trim();
+                String details = "";
+                boolean found = false;
+                
+                try (BufferedReader reader = new BufferedReader(new FileReader("Vehicles.csv"))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        String[] tokens = line.split(",");
+                        if (tokens.length >= 6) {
+                            String owner = tokens[0];
+                            String vehicle = tokens[1];
+                            if (owner.equals(searchOwner) && vehicle.equals(searchVehicle)) {
+                                details = "Owner ID: " + tokens[0] + "\n" +
+                                          "Vehicle ID: " + tokens[1] + "\n" +
+                                          "Model: " + tokens[2] + "\n" +
+                                          "VIN: " + tokens[3] + "\n" +
+                                          "Residency Time: " + tokens[4] + " hrs\n" +
+                                          "Timestamp: " + tokens[5];
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                
+                if (found) {
+                    JOptionPane.showMessageDialog(frame, details, "Vehicle Details", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "No vehicle record found for the given Owner ID and Vehicle ID.", "Not Found", JOptionPane.ERROR_MESSAGE);
+                }
             });
-
+            
             backButton.addActionListener(e -> {
                 frame.dispose();
                 new MainMenuScreen();
             });
-
+            
             panel.add(instructions);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
             panel.add(ownerIDLabel);
@@ -374,7 +431,7 @@ public class VehicleOwner {
             panel.add(viewButton);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
             panel.add(backButton);
-
+            
             frame.add(panel, BorderLayout.CENTER);
             frame.setVisible(true);
         }
