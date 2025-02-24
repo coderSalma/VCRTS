@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.*;
 
 public class AccountAuthentication {
     public static boolean authenticateAccount(String inputUsername, String inputPassword) {
@@ -21,11 +20,12 @@ public class AccountAuthentication {
                     if (tempType) {
                         System.out.println("Welcome, Vehicle Owner!");
                         // Redirect to vehicle owner page
-                        VehicleOwner.getMainScreen();
+                        new VehicleOwner();
+                        //adding the username so it can be referenced to make a new file
                     } else {
                         System.out.println("Welcome, Job Owner!");
                         // Redirect to job owner page
-                        JobOwner.getMainScreen();
+                        new JobOwner(inputUsername);
                     }
                 }
                 input = buffer.readLine();
