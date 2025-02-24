@@ -162,10 +162,14 @@ public class VehicleOwner {
             residencyTimeField.setMaximumSize(new Dimension(400, 30));
             residencyTimeField.setAlignmentX(Component.CENTER_ALIGNMENT);
             
-            submitButton = new JButton("Submit");
-            submitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-            backButton = new JButton("Back");
-            backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            JPanel buttonPanel = new JPanel();
+			buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+			JButton submitButton = new JButton("Submit");
+			JButton backButton = new JButton("Back");
+			buttonPanel.add(backButton);
+			buttonPanel.add(Box.createRigidArea(new Dimension(70, 0)));
+			buttonPanel.add(submitButton);
+			buttonPanel.setPreferredSize(new Dimension(300, 40)); 
             
             submitButton.addActionListener(e -> {
                 String ownerID = ownerIDField.getText().trim();
@@ -212,10 +216,7 @@ public class VehicleOwner {
             panel.add(residencyTimeLabel);
             panel.add(residencyTimeField);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
-            panel.add(submitButton);
-            panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(backButton);
-            
+            panel.add(buttonPanel);            
             frame.add(panel, BorderLayout.CENTER);
             frame.setVisible(true);
         }
@@ -278,11 +279,15 @@ public class VehicleOwner {
             residencyTimeField.setMaximumSize(new Dimension(400, 30));
             residencyTimeField.setAlignmentX(Component.CENTER_ALIGNMENT);
             
-            updateButton = new JButton("Update");
-            updateButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-            backButton = new JButton("Back");
-            backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-            
+            JPanel buttonPanel = new JPanel();
+			buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+			JButton updateButton = new JButton("Update");
+			JButton backButton = new JButton("Back");
+			buttonPanel.add(backButton);
+			buttonPanel.add(Box.createRigidArea(new Dimension(70, 0)));
+			buttonPanel.add(updateButton);
+			buttonPanel.setPreferredSize(new Dimension(300, 40)); 
+			
             updateButton.addActionListener(e -> {
                 String ownerID = ownerIDField.getText().trim();
                 String vehicleID = vehicleIDField.getText().trim();
@@ -328,9 +333,7 @@ public class VehicleOwner {
             panel.add(residencyTimeLabel);
             panel.add(residencyTimeField);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
-            panel.add(updateButton);
-            panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(backButton);
+            panel.add(buttonPanel);
             
             frame.add(panel, BorderLayout.CENTER);
             frame.setVisible(true);
@@ -374,10 +377,14 @@ public class VehicleOwner {
             vehicleIDField.setMaximumSize(new Dimension(400, 30));
             vehicleIDField.setAlignmentX(Component.CENTER_ALIGNMENT);
             
-            viewButton = new JButton("View");
-            viewButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-            backButton = new JButton("Back");
-            backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            JPanel buttonPanel = new JPanel();
+			buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+			JButton viewButton = new JButton("View");
+			JButton backButton = new JButton("Back");
+			buttonPanel.add(backButton);
+			buttonPanel.add(Box.createRigidArea(new Dimension(70, 0)));
+			buttonPanel.add(viewButton);
+			buttonPanel.setPreferredSize(new Dimension(300, 40)); 
             
             viewButton.addActionListener(e -> {
                 String searchOwner = ownerIDField.getText().trim();
@@ -428,9 +435,7 @@ public class VehicleOwner {
             panel.add(vehicleIDLabel);
             panel.add(vehicleIDField);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
-            panel.add(viewButton);
-            panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(backButton);
+            panel.add(buttonPanel);
             
             frame.add(panel, BorderLayout.CENTER);
             frame.setVisible(true);
