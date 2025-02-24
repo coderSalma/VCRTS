@@ -18,7 +18,9 @@ public class JobOwner {
     	this.username = username;
         new MainMenuScreen(username);
     }
-	public JobOwner(int jobID, int jobDuration, String jobName, String jobInfo, String jobDeadline) {
+    
+	public JobOwner(String username, int jobID, int jobDuration, String jobName, String jobInfo, String jobDeadline) {
+		this.username = username;
 		this.jobID = jobID;
 		this.jobDuration = jobDuration;
 		this.jobName = jobName;
@@ -60,7 +62,7 @@ public class JobOwner {
                 String tempInfo = readJob[2];
                 int tempDuration = Integer.parseInt(readJob[3]);
                 String tempDeadline = readJob[4];
-                JobOwner CSVJob = new JobOwner(tempID, tempDuration, tempName, tempInfo, tempDeadline);
+                JobOwner CSVJob = new JobOwner(username, tempID, tempDuration, tempName, tempInfo, tempDeadline);
                 jobs.add(CSVJob); // Add job to the list
             }
         } catch (IOException e) {
@@ -233,7 +235,7 @@ public class JobOwner {
 				String newJobDeadline = jobDeadlineField.getText();
 				int newTimeMin = Integer.parseInt(timeMinField.getText());
 
-                JobOwner newJob = new JobOwner(newJobID, newTimeMin, newJobName, newJobInfo, newJobDeadline);
+                JobOwner newJob = new JobOwner(username, newJobID, newTimeMin, newJobName, newJobInfo, newJobDeadline);
                 newJob.saveJobToCSV(newJobID, newJobName, newJobInfo, newTimeMin, newJobDeadline);
 
 				JOptionPane.showMessageDialog(frame, "Job Saved Successfully!");
