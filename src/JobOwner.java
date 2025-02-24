@@ -1,41 +1,36 @@
 import java.awt.*;
-import javax.swing.*;
-import java.awt.event.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class JobOwner {
 
-    public static void main(String[] args) {
-        new MainMenuScreen();
-    }
-    
-    public static void getMainScreen()
-    {
-    	new MainMenuScreen();
-    }
-
+    private String username;
     private int jobID;
     private int jobDuration;
     private String jobName;
     private String jobInfo;
     private String jobDeadline;
 
-    public JobOwner() {
+    public JobOwner(String username) { // Added username parameter
+        this.username = username;
+        new MainMenuScreen(username);
     }
 
-    public JobOwner(int jobID, int jobDuration, String jobName, String jobInfo, String jobDeadline) {
-        this.jobID = jobID;
-        this.jobDuration = jobDuration;
-        this.jobName = jobName;
-        this.jobInfo = jobInfo;
-        this.jobDeadline = jobDeadline;
-    }
+	public JobOwner(int jobID, int jobDuration, String jobName, String jobInfo, String jobDeadline) {
+		this.jobID = jobID;
+		this.jobDuration = jobDuration;
+		this.jobName = jobName;
+		this.jobInfo = jobInfo;
+		this.jobDeadline = jobDeadline;
+	}
 
-    private static void saveJobToCSV(int jobID, String jobName, String jobInfo, int jobDuration, String jobDeadline) {
+    private void saveJobToCSV(int jobID, String jobName, String jobInfo, int jobDuration, String jobDeadline) {
         String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        String fileName = "Jobs.csv";  
+        String fileName = username + "Jobs.csv";  
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
             writer.write(jobID + "," + jobName + "," + jobInfo + "," + jobDuration + "," + jobDeadline + "," + timestamp);
@@ -45,220 +40,302 @@ public class JobOwner {
         }
     }
 
-    //Screen for the main menu, options will be New Job, Old Jobs, Current Jobs as buttons
-    public static class MainMenuScreen {
-        private JFrame frame;
-        private JButton newJobButton, oldJobButton, currentJobButton;
-        private JLabel mainMenuLabel;
-        private JPanel panel;
+    public List<JobOwner> readJobFromCSV() { // Made public and return List<JobOwner>
+        String fileName = username + "Jobs.csv";
+        List<JobOwner> jobs = new ArrayList<>();
 
-        public MainMenuScreen() {
+        try (BufferedReader buffer = new BufferedReader(new FileReader(fileName))) {
+            String pulledJob;
+            while ((pulledJob = buffer.readLine()) != null) {
+                String[] readJob = pulledJob.split(",");
+                int tempID = Integer.parseInt(readJob[0]);
+                String tempName = readJob[1];
+                String tempInfo = readJob[2];
+                int tempDuration = Integer.parseInt(readJob[3]);
+                String tempDeadline = readJob[4];
+                JobOwner CSVJob = new JobOwner(tempID, tempDuration, tempName, tempInfo, tempDeadline);
+                jobs.add(CSVJob); // Add job to the list
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return jobs;
+    }
+
+	// Screen for the main menu, options will be New Job, Old Jobs, Current Jobs as
+	// buttons
+	public static class MainMenuScreen {
+		private JFrame frame;
+		private JButton newJobButton, oldJobButton, currentJobButton;
+		private JLabel mainMenuLabel;
+		private JPanel panel;
+
+        public MainMenuScreen(String username) { // Updated constructor
             frame = new JFrame("Select Job Option");
             frame.setSize(400, 300);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
-            //frame.getContentPane().setBackground(new Color(204, 229, 255));
+            frame.getContentPane().setBackground(new Color(204, 229, 255));
 
-            panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-            //panel.setBackground(new Color(204, 229, 255));
+			panel = new JPanel();
+			// Use BoxLayout to arrange components vertically
+			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+			panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+			// panel.setBackground(new Color(204, 229, 255));
 
-            mainMenuLabel = new JLabel("Welcome to the Job Management System", SwingConstants.CENTER);
-            mainMenuLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
-            mainMenuLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+			mainMenuLabel = new JLabel("Welcome to the Job Management System", SwingConstants.CENTER);
+			mainMenuLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
+			mainMenuLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            newJobButton = new JButton("New Job");
-            oldJobButton = new JButton("Old Job(s)");
-            currentJobButton = new JButton("Current Job(s)");
+			newJobButton = new JButton("New Job");
+			oldJobButton = new JButton("Old Job(s)");
+			currentJobButton = new JButton("Current Job(s)");
 
-            newJobButton.setPreferredSize(new Dimension(120, 30));
-            oldJobButton.setPreferredSize(new Dimension(120, 30));
-            currentJobButton.setPreferredSize(new Dimension(120, 30));
+			Dimension buttonSize = new Dimension(120, 30);
+			newJobButton.setMaximumSize(buttonSize);
+			oldJobButton.setMaximumSize(buttonSize);
+			currentJobButton.setMaximumSize(buttonSize);
 
-            newJobButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-            oldJobButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-            currentJobButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+			newJobButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+			oldJobButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+			currentJobButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             newJobButton.addActionListener(e -> {
                 frame.dispose();
-                new NewJobScreen();
+                new NewJobScreen(username); // Pass username
             });
 
             oldJobButton.addActionListener(e -> {
                 frame.dispose();
-                new OldJobScreen();
+                new OldJobScreen(username); // Pass username
             });
 
             currentJobButton.addActionListener(e -> {
                 frame.dispose();
-                new CurrentJobScreen();
+                new CurrentJobScreen(username); // Pass username
             });
 
-            panel.add(mainMenuLabel);
-            panel.add(Box.createRigidArea(new Dimension(0, 20)));
-            panel.add(newJobButton);
-            panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(oldJobButton);
-            panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(currentJobButton);
+			panel.add(mainMenuLabel);
+			panel.add(Box.createRigidArea(new Dimension(0, 20))); // Adds space between title and buttons
+			panel.add(newJobButton);
+			panel.add(Box.createRigidArea(new Dimension(0, 10))); // Adds space between buttons
+			panel.add(oldJobButton);
+			panel.add(Box.createRigidArea(new Dimension(0, 10))); // Adds space between buttons
+			panel.add(currentJobButton);
 
-            frame.add(panel, BorderLayout.CENTER);
-            frame.setVisible(true);
-        }
-    }
+			frame.add(panel, BorderLayout.CENTER);
+			frame.setVisible(true);
+		}
+	}
 
-    //Prompts the Job Owner for Information about the Job. There is a submit button
-    //and a back button. Multiple jobs can be submitted at once. 
+    // Prompts the Job Owner for Information about the Job
     public static class NewJobScreen {
         private JFrame frame;
         private JLabel instructions, jobNameLabel, jobInfoLabel, timeMinLabel, jobDeadlineLabel;
         private JTextField jobNameField, jobInfoField, timeMinField, jobDeadlineField;
         private JButton submitJobButton, backButton;
         private JPanel panel;
+        private String username;
 
-        public NewJobScreen() {
+        public NewJobScreen(String username) { // Added username parameter
+            this.username = username;
             frame = new JFrame("New Job Submission");
-            frame.setSize(500, 500);
+            frame.setSize(600, 500);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
 
-            panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-            //panel.setBackground(new Color(204, 229, 255));
+			JPanel panel = new JPanel();
+			panel.setLayout(new GridLayout(6, 2, 10, 10));
+			panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+			// panel.setBackground(new Color(204, 229, 255));
 
-            instructions = new JLabel("<html>Enter the details of the new job below:</html>", SwingConstants.CENTER);
-            instructions.setFont(new Font("Times New Roman", Font.BOLD, 16));
-            instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
+			instructions = new JLabel("<html>Enter the details of the new job below:<html>", SwingConstants.CENTER);
+			instructions.setFont(new Font("Times New Roman", Font.BOLD, 20));
+			JPanel instructionsPanel = new JPanel();
+			instructionsPanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
+			instructionsPanel.add(instructions);
 
-            jobNameLabel = new JLabel("Job Name:");
-            jobNameLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
-            jobNameField = new JTextField(40);
-            jobNameField.setMaximumSize(new Dimension(400, 30));
+			//job name panel
+			jobNameLabel = new JLabel("Job Name:");
+			jobNameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+			jobNameField = new JTextField();
+			jobNameField.setMaximumSize(new Dimension(800, 30));
+            jobNameField.setPreferredSize(new Dimension(250, 30));
+			JPanel jobNamePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			jobNameLabel.setPreferredSize(new Dimension(250, 30));
+			jobNamePanel.add(jobNameLabel);
+			jobNamePanel.add(jobNameField);
+			panel.add(jobNamePanel);
 
-            jobInfoLabel = new JLabel("Job Info:");
-            jobInfoLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
-            jobInfoField = new JTextField(40);
-            jobInfoField.setMaximumSize(new Dimension(400, 30));
+			
+			//job info panel
+			jobInfoLabel = new JLabel("Job Info:");
+			jobInfoLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+			jobInfoField = new JTextField();
+			jobInfoField.setMaximumSize(new Dimension(800, 30));
+            jobInfoField.setPreferredSize(new Dimension(250, 30));
+			JPanel jobInfoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			jobInfoLabel.setPreferredSize(new Dimension(250, 30));
+			jobInfoPanel.add(jobInfoLabel);
+			jobInfoPanel.add(jobInfoField);
+			panel.add(jobInfoPanel);
 
-            timeMinLabel = new JLabel("Job Duration (hours):");
-            timeMinLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
-            timeMinField = new JTextField(5);
-            timeMinField.setMaximumSize(new Dimension(400, 30));
+			//time panel
+			timeMinLabel = new JLabel("Job Duration (hours):");
+			timeMinLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+			timeMinField = new JTextField();
+			timeMinField.setMaximumSize(new Dimension(800, 30));
+            timeMinField.setPreferredSize(new Dimension(250, 30));
+			JPanel timeMinPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			timeMinLabel.setPreferredSize(new Dimension(250, 30));
+			timeMinPanel.add(timeMinLabel);
+			timeMinPanel.add(timeMinField);
+			panel.add(timeMinPanel);
+			
+			//job deadline panel
+			jobDeadlineLabel = new JLabel("Job Deadline (YYYY-MM-DD):");
+			jobDeadlineLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+			jobDeadlineField = new JTextField();
+			jobDeadlineField.setMaximumSize(new Dimension(800, 30));
+            jobDeadlineField.setPreferredSize(new Dimension(250, 30));
+			JPanel jobDeadlinePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			jobDeadlineLabel.setPreferredSize(new Dimension(250, 30));
+			jobDeadlinePanel.add(jobDeadlineLabel);
+			jobDeadlinePanel.add(jobDeadlineField);
+			panel.add(jobDeadlinePanel);
+		
+			
+			JPanel buttonPanel = new JPanel();
+			buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+			JButton submitJobButton = new JButton("Submit");
+			JButton backButton = new JButton("Back");
+			buttonPanel.add(backButton);
+			buttonPanel.add(Box.createRigidArea(new Dimension(70, 0)));
+			buttonPanel.add(submitJobButton);
+			buttonPanel.setPreferredSize(new Dimension(300, 40)); 
+			
 
-            jobDeadlineLabel = new JLabel("Job Deadline (YYYY-MM-DD):");
-            jobDeadlineLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
-            jobDeadlineField = new JTextField(10);
-            jobDeadlineField.setMaximumSize(new Dimension(400, 30));
 
-            submitJobButton = new JButton("Submit");
-            backButton = new JButton("Back");
 
-            submitJobButton.addActionListener(e -> {
-                int newJobID = (int) (Math.random() * 1000);
-                String newJobName = jobNameField.getText();
-                String newJobInfo = jobInfoField.getText();
-                String newJobDeadline = jobDeadlineField.getText();
-                int newTimeMin = Integer.parseInt(timeMinField.getText());
+			// Button Action Listeners
+			submitJobButton.addActionListener(e -> {
+				int newJobID = (int) (Math.random() * 1000);
+				String newJobName = jobNameField.getText();
+				String newJobInfo = jobInfoField.getText();
+				String newJobDeadline = jobDeadlineField.getText();
+				int newTimeMin = Integer.parseInt(timeMinField.getText());
 
                 JobOwner newJob = new JobOwner(newJobID, newTimeMin, newJobName, newJobInfo, newJobDeadline);
+                newJob.saveJobToCSV(newJobID, newJobName, newJobInfo, newTimeMin, newJobDeadline);
 
-                saveJobToCSV(newJobID, newJobName, newJobInfo, newTimeMin, newJobDeadline);
+				JOptionPane.showMessageDialog(frame, "Job Saved Successfully!");
 
-                JOptionPane.showMessageDialog(frame, "Job Saved Successfully!");
-
-                jobNameField.setText("");
-                jobInfoField.setText("");
-                timeMinField.setText("");
-                jobDeadlineField.setText("");
-            });
+				jobNameField.setText("");
+				jobInfoField.setText("");
+				timeMinField.setText("");
+				jobDeadlineField.setText("");
+			});
 
             backButton.addActionListener(e -> {
                 frame.dispose();
-                new MainMenuScreen();
+                new MainMenuScreen(username); // Pass username
             });
 
             panel.add(instructions);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
-            panel.add(jobNameLabel);
-            panel.add(jobNameField);
+            panel.add(jobNamePanel);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(jobInfoLabel);
-            panel.add(jobInfoField);
+            panel.add(jobInfoPanel);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(timeMinLabel);
-            panel.add(timeMinField);
+            panel.add(timeMinPanel);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(jobDeadlineLabel);
-            panel.add(jobDeadlineField);
+            panel.add(jobDeadlinePanel);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
-            panel.add(submitJobButton);
-            panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(backButton);
-
+            panel.add(buttonPanel);
+            
+            
+            
             frame.add(panel, BorderLayout.CENTER);
             frame.setVisible(true);
         }
     }
 
-    //OldJobScreen Should display a list of the old jobs (those marked as completed) or "There are no previous jobs"
-    public static class OldJobScreen {
-        private JFrame frame;
-        private JLabel oldJobLabel;
-        private JPanel panel;
+	// OldJobScreen Should display a list of the old jobs (those marked as
+	// completed) or "There are no previous jobs"
+	public static class OldJobScreen {
+		private JFrame frame;
+		private JLabel oldJobLabel;
+		private JPanel panel;
 
-        public OldJobScreen() {
+        public OldJobScreen(String username) {
             frame = new JFrame("Old Job");
             frame.setSize(400, 200);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
-            //frame.getContentPane().setBackground(new Color(204, 229, 255));
+            frame.getContentPane().setBackground(new Color(204, 229, 255));
 
-            panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-            //panel.setBackground(new Color(204, 229, 255));
+			panel = new JPanel();
+			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+			panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+			// panel.setBackground(new Color(204, 229, 255));
 
-            oldJobLabel = new JLabel("Old Jobs will be here.", SwingConstants.CENTER);
-            oldJobLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
-            oldJobLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+			oldJobLabel = new JLabel("Old Jobs will be here.", SwingConstants.CENTER);
+			oldJobLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
+			oldJobLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            panel.add(oldJobLabel);
+			panel.add(oldJobLabel);
 
-            frame.add(panel, BorderLayout.CENTER);
-            frame.setVisible(true);
-        }
-    }
+			frame.add(panel, BorderLayout.CENTER);
+			frame.setVisible(true);
+			
+			JButton backButton = new JButton("Back");
+			panel.add(backButton);
 
-   //This will display Current Jobs, the bills (whether they've been paid or not), the info they were prompted for when making the job
-   //And for now, whether or not the job is in progress or not
+			backButton.addActionListener(e -> {
+				frame.dispose();
+				//new MainMenuScreen();
+				new JobOwner(username);
+			});
+		}
+	}
 
-    public static class CurrentJobScreen {
-        private JFrame frame;
-        private JLabel currentJobLabel;
-        private JPanel panel;
+	// This will display Current Jobs, the bills (whether they've been paid or not),
+	// the info they were prompted for when making the job
+	// And for now, whether or not the job is in progress or not
 
-        public CurrentJobScreen() {
+	public static class CurrentJobScreen {
+		private JFrame frame;
+		private JLabel currentJobLabel;
+		private JPanel panel;
+
+        public CurrentJobScreen(String username) {
             frame = new JFrame("Current Job(s)");
             frame.setSize(400, 200);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
-            //frame.getContentPane().setBackground(new Color(204, 229, 255));
+            frame.getContentPane().setBackground(new Color(204, 229, 255));
 
-            panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-            //panel.setBackground(new Color(204, 229, 255));
+			panel = new JPanel();
+			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+			panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+			//panel.setBackground(new Color(204, 229, 255));
 
-            currentJobLabel = new JLabel("Current Job(s) will be here.", SwingConstants.CENTER);
-            currentJobLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
-            currentJobLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+			currentJobLabel = new JLabel("Current Job(s) will be here.", SwingConstants.CENTER);
+			currentJobLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
+			currentJobLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+			panel.add(currentJobLabel);
 
-            panel.add(currentJobLabel);
+			JButton backButton = new JButton("Back");
+			panel.add(backButton);
 
-            frame.add(panel, BorderLayout.CENTER);
-            frame.setVisible(true);
-        }
-    }
+			backButton.addActionListener(e -> {
+				frame.dispose();
+				//new MainMenuScreen();
+				new JobOwner(username);
+			});
+			frame.add(panel, BorderLayout.CENTER);
+			frame.setVisible(true);
+		}
+	}
 }
