@@ -190,12 +190,13 @@ public class VehicleOwner {
             residencyTimePanel.add(residencyTimeField);
 
             JPanel buttonPanel = new JPanel();
-            buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-            submitButton = new JButton("Submit");
-            backButton = new JButton("Back");
-            buttonPanel.add(backButton);
-            buttonPanel.add(submitButton);
-            panel.add(buttonPanel);
+			buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+			JButton submitButton = new JButton("Submit");
+			JButton backButton = new JButton("Back");
+			buttonPanel.add(backButton);
+			buttonPanel.add(Box.createRigidArea(new Dimension(70, 0)));
+			buttonPanel.add(submitButton);
+			buttonPanel.setPreferredSize(new Dimension(300, 40)); 
 
 
             submitButton.addActionListener(e -> {
@@ -239,9 +240,7 @@ public class VehicleOwner {
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
             panel.add(residencyTimePanel);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
-            panel.add(submitButton);
-            panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(backButton);
+            panel.add(buttonPanel);
 
             frame.add(panel, BorderLayout.CENTER);
             frame.setVisible(true);
@@ -323,9 +322,16 @@ public class VehicleOwner {
             residencyTimePanel.add(residencyTimeLabel);
             residencyTimePanel.add(residencyTimeField);
 
-            updateButton = new JButton("Update");
-            backButton = new JButton("Back");
-
+            JPanel buttonPanel = new JPanel();
+			buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+			JButton updateButton = new JButton("Update");
+			JButton backButton = new JButton("Back");
+			buttonPanel.add(backButton);
+			buttonPanel.add(Box.createRigidArea(new Dimension(70, 0)));
+			buttonPanel.add(updateButton);
+			buttonPanel.setPreferredSize(new Dimension(300, 40)); 
+			
+			
             updateButton.addActionListener(e -> {
                 String ownerID = ownerIDField.getText().trim();
                 String vehicleID = vehicleIDField.getText().trim();
@@ -367,10 +373,8 @@ public class VehicleOwner {
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
             panel.add(residencyTimePanel);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
-            panel.add(updateButton);
-            panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(backButton);
-
+            panel.add(buttonPanel);
+            
             frame.add(panel, BorderLayout.CENTER);
             frame.setVisible(true);
         }
@@ -422,8 +426,14 @@ public class VehicleOwner {
             vehicleIDPanel.add(vehicleIDField);
             
 
-            viewButton = new JButton("View");
-            backButton = new JButton("Back");
+            JPanel buttonPanel = new JPanel();
+			buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+			JButton viewButton = new JButton("View");
+			JButton backButton = new JButton("Back");
+			buttonPanel.add(backButton);
+			buttonPanel.add(Box.createRigidArea(new Dimension(70, 0)));
+			buttonPanel.add(viewButton);
+			buttonPanel.setPreferredSize(new Dimension(300, 40)); 
 
             viewButton.addActionListener(e -> {
                 String ownerID = ownerIDField.getText().trim();
@@ -442,9 +452,7 @@ public class VehicleOwner {
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
             panel.add(vehicleIDPanel);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
-            panel.add(viewButton);
-            panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(backButton);
+            panel.add(buttonPanel);
 
             frame.add(panel, BorderLayout.CENTER);
             frame.setVisible(true);
