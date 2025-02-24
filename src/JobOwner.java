@@ -140,48 +140,83 @@ public class JobOwner {
         public NewJobScreen(String username) { // Added username parameter
             this.username = username;
             frame = new JFrame("New Job Submission");
-            frame.setSize(500, 500);
+            frame.setSize(600, 500);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
 
 			JPanel panel = new JPanel();
 			panel.setLayout(new GridLayout(6, 2, 10, 10));
 			panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 			// panel.setBackground(new Color(204, 229, 255));
 
 			instructions = new JLabel("<html>Enter the details of the new job below:<html>", SwingConstants.CENTER);
 			instructions.setFont(new Font("Times New Roman", Font.BOLD, 20));
-			panel.add(instructions);
-			panel.add(new JLabel());
+			JPanel instructionsPanel = new JPanel();
+			instructionsPanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
+			instructionsPanel.add(instructions);
 
+			//job name panel
 			jobNameLabel = new JLabel("Job Name:");
 			jobNameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-			jobNameField = new JTextField(10);
-			panel.add(jobNameLabel);
-			panel.add(jobNameField);
+			jobNameField = new JTextField();
+			jobNameField.setMaximumSize(new Dimension(800, 30));
+            jobNameField.setPreferredSize(new Dimension(250, 30));
+			JPanel jobNamePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			jobNameLabel.setPreferredSize(new Dimension(250, 30));
+			jobNamePanel.add(jobNameLabel);
+			jobNamePanel.add(jobNameField);
+			panel.add(jobNamePanel);
 
+			
+			//job info panel
 			jobInfoLabel = new JLabel("Job Info:");
 			jobInfoLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-			jobInfoField = new JTextField(10);
-			panel.add(jobInfoLabel);
-			panel.add(jobInfoField);
+			jobInfoField = new JTextField();
+			jobInfoField.setMaximumSize(new Dimension(800, 30));
+            jobInfoField.setPreferredSize(new Dimension(250, 30));
+			JPanel jobInfoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			jobInfoLabel.setPreferredSize(new Dimension(250, 30));
+			jobInfoPanel.add(jobInfoLabel);
+			jobInfoPanel.add(jobInfoField);
+			panel.add(jobInfoPanel);
 
+			//time panel
 			timeMinLabel = new JLabel("Job Duration (hours):");
 			timeMinLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-			timeMinField = new JTextField(10);
-			panel.add(timeMinLabel);
-			panel.add(timeMinField);
-
+			timeMinField = new JTextField();
+			timeMinField.setMaximumSize(new Dimension(800, 30));
+            timeMinField.setPreferredSize(new Dimension(250, 30));
+			JPanel timeMinPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			timeMinLabel.setPreferredSize(new Dimension(250, 30));
+			timeMinPanel.add(timeMinLabel);
+			timeMinPanel.add(timeMinField);
+			panel.add(timeMinPanel);
+			
+			//job deadline panel
 			jobDeadlineLabel = new JLabel("Job Deadline (YYYY-MM-DD):");
 			jobDeadlineLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-			jobDeadlineField = new JTextField(10);
-			panel.add(jobDeadlineLabel);
-			panel.add(jobDeadlineField);
+			jobDeadlineField = new JTextField();
+			jobDeadlineField.setMaximumSize(new Dimension(800, 30));
+            jobDeadlineField.setPreferredSize(new Dimension(250, 30));
+			JPanel jobDeadlinePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			jobDeadlineLabel.setPreferredSize(new Dimension(250, 30));
+			jobDeadlinePanel.add(jobDeadlineLabel);
+			jobDeadlinePanel.add(jobDeadlineField);
+			panel.add(jobDeadlinePanel);
+		
+			
+			JPanel buttonPanel = new JPanel();
+			buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+			JButton submitJobButton = new JButton("Submit");
+			JButton backButton = new JButton("Back");
+			buttonPanel.add(backButton);
+			buttonPanel.add(Box.createRigidArea(new Dimension(70, 0)));
+			buttonPanel.add(submitJobButton);
+			buttonPanel.setPreferredSize(new Dimension(300, 40)); 
+			
 
-			submitJobButton = new JButton("Submit");
-			backButton = new JButton("Back");
-			panel.add(backButton);
-			panel.add(submitJobButton);
+
 
 			// Button Action Listeners
 			submitJobButton.addActionListener(e -> {
@@ -209,23 +244,18 @@ public class JobOwner {
 
             panel.add(instructions);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
-            panel.add(jobNameLabel);
-            panel.add(jobNameField);
+            panel.add(jobNamePanel);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(jobInfoLabel);
-            panel.add(jobInfoField);
+            panel.add(jobInfoPanel);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(timeMinLabel);
-            panel.add(timeMinField);
+            panel.add(timeMinPanel);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(jobDeadlineLabel);
-            panel.add(jobDeadlineField);
+            panel.add(jobDeadlinePanel);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
-            panel.add(submitJobButton);
-            panel.add(Box.createRigidArea(new Dimension(0, 10)));
-
-            panel.add(backButton);
-
+            panel.add(buttonPanel);
+            
+            
+            
             frame.add(panel, BorderLayout.CENTER);
             frame.setVisible(true);
         }
