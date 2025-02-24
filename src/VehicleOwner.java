@@ -124,39 +124,39 @@ public class VehicleOwner {
             panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
             
             instructions = new JLabel("<html>Enter the details of your vehicle below:</html>", SwingConstants.CENTER);
-            instructions.setFont(new Font("Serif", Font.BOLD, 16));
+            instructions.setFont(new Font("Times New Roman", Font.BOLD, 16));
             instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
             
             ownerIDLabel = new JLabel("Owner ID:");
-            ownerIDLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            ownerIDLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
             ownerIDLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             ownerIDField = new JTextField(20);
             ownerIDField.setMaximumSize(new Dimension(400, 30));
             ownerIDField.setAlignmentX(Component.CENTER_ALIGNMENT);
             
             vehicleIDLabel = new JLabel("Vehicle ID:");
-            vehicleIDLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            vehicleIDLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
             vehicleIDLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             vehicleIDField = new JTextField(20);
             vehicleIDField.setMaximumSize(new Dimension(400, 30));
             vehicleIDField.setAlignmentX(Component.CENTER_ALIGNMENT);
             
             modelLabel = new JLabel("Model:");
-            modelLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            modelLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
             modelLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             modelField = new JTextField(20);
             modelField.setMaximumSize(new Dimension(400, 30));
             modelField.setAlignmentX(Component.CENTER_ALIGNMENT);
             
             vinLabel = new JLabel("VIN:");
-            vinLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            vinLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
             vinLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             vinField = new JTextField(20);
             vinField.setMaximumSize(new Dimension(400, 30));
             vinField.setAlignmentX(Component.CENTER_ALIGNMENT);
             
             residencyTimeLabel = new JLabel("Residency Time (hrs):");
-            residencyTimeLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            residencyTimeLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
             residencyTimeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             residencyTimeField = new JTextField(5);
             residencyTimeField.setMaximumSize(new Dimension(400, 30));
@@ -241,39 +241,39 @@ public class VehicleOwner {
             panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
             
             instructions = new JLabel("<html>Enter the updated details of your vehicle below:</html>", SwingConstants.CENTER);
-            instructions.setFont(new Font("Serif", Font.BOLD, 16));
+            instructions.setFont(new Font("Times New Roman", Font.BOLD, 16));
             instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
             
             ownerIDLabel = new JLabel("Owner ID:");
-            ownerIDLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            ownerIDLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
             ownerIDLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             ownerIDField = new JTextField(20);
             ownerIDField.setMaximumSize(new Dimension(400, 30));
             ownerIDField.setAlignmentX(Component.CENTER_ALIGNMENT);
             
             vehicleIDLabel = new JLabel("Vehicle ID:");
-            vehicleIDLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            vehicleIDLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
             vehicleIDLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             vehicleIDField = new JTextField(20);
             vehicleIDField.setMaximumSize(new Dimension(400, 30));
             vehicleIDField.setAlignmentX(Component.CENTER_ALIGNMENT);
             
             modelLabel = new JLabel("Model:");
-            modelLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            modelLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
             modelLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             modelField = new JTextField(20);
             modelField.setMaximumSize(new Dimension(400, 30));
             modelField.setAlignmentX(Component.CENTER_ALIGNMENT);
             
             vinLabel = new JLabel("VIN:");
-            vinLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            vinLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
             vinLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             vinField = new JTextField(20);
             vinField.setMaximumSize(new Dimension(400, 30));
             vinField.setAlignmentX(Component.CENTER_ALIGNMENT);
             
             residencyTimeLabel = new JLabel("Residency Time (hrs):");
-            residencyTimeLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            residencyTimeLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
             residencyTimeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             residencyTimeField = new JTextField(5);
             residencyTimeField.setMaximumSize(new Dimension(400, 30));
@@ -360,18 +360,18 @@ public class VehicleOwner {
             panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
             
             instructions = new JLabel("<html>Enter the Owner ID and Vehicle ID to view details:</html>", SwingConstants.CENTER);
-            instructions.setFont(new Font("Serif", Font.BOLD, 16));
+            instructions.setFont(new Font("Times New Roman", Font.BOLD, 16));
             instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
             
             ownerIDLabel = new JLabel("Owner ID:");
-            ownerIDLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            ownerIDLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
             ownerIDLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             ownerIDField = new JTextField(20);
             ownerIDField.setMaximumSize(new Dimension(400, 30));
             ownerIDField.setAlignmentX(Component.CENTER_ALIGNMENT);
             
             vehicleIDLabel = new JLabel("Vehicle ID:");
-            vehicleIDLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            vehicleIDLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
             vehicleIDLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             vehicleIDField = new JTextField(20);
             vehicleIDField.setMaximumSize(new Dimension(400, 30));
