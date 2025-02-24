@@ -20,7 +20,7 @@ public class AccountAuthentication {
                     if (tempType) {
                         System.out.println("Welcome, Vehicle Owner!");
                         // Redirect to vehicle owner page
-                        new VehicleOwner();
+                        VehicleOwner.getMainScreen();
                         //adding the username so it can be referenced to make a new file
                     } else {
                         System.out.println("Welcome, Job Owner!");
