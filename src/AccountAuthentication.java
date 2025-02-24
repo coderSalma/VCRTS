@@ -25,7 +25,7 @@ public class AccountAuthentication {
                     } else {
                         System.out.println("Welcome, Job Owner!");
                         // Redirect to job owner page
-                        new JobOwner(inputUsername);
+                        new JobOwner(tempUsername);
                     }
                 }
                 input = buffer.readLine();

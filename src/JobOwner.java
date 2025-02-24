@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class JobOwner {
-
-    private String username;
+	private String username;
     private int jobID;
     private int jobDuration;
     private String jobName;
@@ -16,10 +15,9 @@ public class JobOwner {
     private String jobDeadline;
 
     public JobOwner(String username) { // Added username parameter
-        this.username = username;
+    	this.username = username;
         new MainMenuScreen(username);
     }
-
 	public JobOwner(int jobID, int jobDuration, String jobName, String jobInfo, String jobDeadline) {
 		this.jobID = jobID;
 		this.jobDuration = jobDuration;
@@ -28,11 +26,18 @@ public class JobOwner {
 		this.jobDeadline = jobDeadline;
 	}
 
-    private void saveJobToCSV(int jobID, String jobName, String jobInfo, int jobDuration, String jobDeadline) {
+    public void saveJobToCSV(int jobID, String jobName, String jobInfo, int jobDuration, String jobDeadline) {
+    	String fileName =  username + "Jobs.csv"; 
+    	System.out.println(username);
+    	File file = new File(fileName);
+    	try {
+			file.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        String fileName = username + "Jobs.csv";  
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
             writer.write(jobID + "," + jobName + "," + jobInfo + "," + jobDuration + "," + jobDeadline + "," + timestamp);
             writer.newLine();
         } catch (IOException e) {
@@ -40,7 +45,9 @@ public class JobOwner {
         }
     }
 
-    public List<JobOwner> readJobFromCSV() { // Made public and return List<JobOwner>
+
+
+	public List<JobOwner> readJobFromCSV() { // Made public and return List<JobOwner>
         String fileName = username + "Jobs.csv";
         List<JobOwner> jobs = new ArrayList<>();
 
