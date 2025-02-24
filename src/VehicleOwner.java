@@ -386,7 +386,7 @@ public class VehicleOwner {
 
         public ViewVehicleScreen() {
             frame = new JFrame("View Vehicle Information");
-            frame.setSize(400, 300);
+            frame.setSize(450, 300);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
 
@@ -398,15 +398,29 @@ public class VehicleOwner {
             instructions.setFont(new Font("Times New Roman", Font.BOLD, 16));
             instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+            //owner id panel
             ownerIDLabel = new JLabel("Owner ID:");
-            ownerIDLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
-            ownerIDField = new JTextField(20);
-            ownerIDField.setMaximumSize(new Dimension(400, 30));
+            ownerIDLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+            ownerIDField = new JTextField();
+            ownerIDField.setMaximumSize(new Dimension(800, 30));
+            ownerIDField.setPreferredSize(new Dimension(250, 30));
+            JPanel ownerIDPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            ownerIDLabel.setPreferredSize(new Dimension(150, 30));
+            ownerIDPanel.add(ownerIDLabel);
+            ownerIDPanel.add(ownerIDField);
 
+
+            //vehicle id panel
             vehicleIDLabel = new JLabel("Vehicle ID:");
-            vehicleIDLabel.setFont(new Font("Calibri", Font.PLAIN, 14));
-            vehicleIDField = new JTextField(20);
+            vehicleIDLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+            vehicleIDField = new JTextField();
             vehicleIDField.setMaximumSize(new Dimension(400, 30));
+            vehicleIDField.setPreferredSize(new Dimension(250, 30));
+            JPanel vehicleIDPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            vehicleIDLabel.setPreferredSize(new Dimension(150, 30));  
+            vehicleIDPanel.add(vehicleIDLabel);
+            vehicleIDPanel.add(vehicleIDField);
+            
 
             viewButton = new JButton("View");
             backButton = new JButton("Back");
@@ -424,11 +438,9 @@ public class VehicleOwner {
 
             panel.add(instructions);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
-            panel.add(ownerIDLabel);
-            panel.add(ownerIDField);
+            panel.add(ownerIDPanel);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(vehicleIDLabel);
-            panel.add(vehicleIDField);
+            panel.add(vehicleIDPanel);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
             panel.add(viewButton);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
