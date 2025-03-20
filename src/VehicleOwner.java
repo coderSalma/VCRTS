@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class VehicleOwner {
 
@@ -45,11 +47,11 @@ public class VehicleOwner {
     }
     
     // ----------------------- Main Menu Screen -----------------------
-    public static class MainMenuScreen {
+    public static class MainMenuScreen extends JFrame{
         private JFrame frame;
-        private JButton newVehicleButton, updateVehicleButton, viewVehicleButton;
+        private JButton newVehicleButton, updateVehicleButton, viewVehicleButton, backButton;;
         private JLabel mainMenuLabel;
-        private JPanel panel;
+        private JPanel panel, backButtonPanel;
         
         public MainMenuScreen() {
             frame = new JFrame("Select Vehicle Option");
@@ -92,6 +94,19 @@ public class VehicleOwner {
                 new ViewVehicleScreen();
             });
             
+
+            backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            backButton = new JButton("Back");
+            backButton.setPreferredSize(new Dimension(90, 25));
+            backButton.setBounds(50, 200, 90, 25);
+            backButton.addActionListener(e -> {
+                frame.dispose();
+                new InitialScreen();
+            });
+
+            backButtonPanel.add(backButton);
+
+            
             panel.add(mainMenuLabel);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
             panel.add(newVehicleButton);
@@ -99,9 +114,12 @@ public class VehicleOwner {
             panel.add(updateVehicleButton);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
             panel.add(viewVehicleButton);
-            
-            frame.add(panel, BorderLayout.CENTER);
+            panel.add(Box.createRigidArea(new Dimension(0, 20))); 
+            frame.add(panel);
+            frame.add(backButtonPanel, BorderLayout.SOUTH);
             frame.setVisible(true);
+            
+            
         }
     }
     

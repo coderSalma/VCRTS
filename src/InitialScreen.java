@@ -57,7 +57,7 @@ public class InitialScreen extends JFrame{
         //open sign up page and close window
         signUpButton.addActionListener(e -> {
         	new Signup();
-            dispose();
+            //dispose();
         });
 
         panel.add(welcomeLabel);
