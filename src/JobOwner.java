@@ -153,8 +153,8 @@ public class JobOwner {
     // Prompts the Job Owner for Information about the Job
     public static class NewJobScreen {
         private JFrame frame;
-        private JLabel instructions, jobNameLabel, jobInfoLabel, timeMinLabel, jobDeadlineLabel;
-        private JTextField jobNameField, jobInfoField, timeMinField, jobDeadlineField;
+        private JLabel instructions, jobNameLabel, jobInfoLabel, timeMinLabel, jobDeadlineLabel, jobIdLabel;
+        private JTextField jobNameField, jobInfoField, timeMinField, jobDeadlineField, jobIdField;
         private JButton submitJobButton, backButton;
         private JPanel panel;
         private String username;
@@ -170,7 +170,6 @@ public class JobOwner {
 			panel.setLayout(new GridLayout(6, 2, 10, 10));
 			panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-			// panel.setBackground(new Color(204, 229, 255));
 
 			instructions = new JLabel("<html>Enter the details of the new job below:<html>", SwingConstants.CENTER);
 			instructions.setFont(new Font("Times New Roman", Font.BOLD, 20));
@@ -178,6 +177,19 @@ public class JobOwner {
 			instructionsPanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
 			instructionsPanel.add(instructions);
 
+			//job id panel
+			jobIdLabel = new JLabel("Job ID:");
+			jobIdLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+			jobIdField = new JTextField();
+			jobIdField.setMaximumSize(new Dimension(800, 30));
+            jobIdField.setPreferredSize(new Dimension(250, 30));
+			JPanel jobIdPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			jobIdLabel.setPreferredSize(new Dimension(250, 30));
+			jobIdPanel.add(jobIdLabel);
+			jobIdPanel.add(jobIdField);
+			panel.add(jobIdPanel);
+
+			
 			//job name panel
 			jobNameLabel = new JLabel("Job Name:");
 			jobNameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
@@ -242,7 +254,8 @@ public class JobOwner {
 
 			// Button Action Listeners
 			submitJobButton.addActionListener(e -> {
-				int newJobID = (int) (Math.random() * 1000);
+				//int newJobID = (int) (Math.random() * 1000);
+				int newJobID = Integer.parseInt(jobIdField.getText());
 				String newJobName = jobNameField.getText();
 				String newJobInfo = jobInfoField.getText();
 				String newJobDeadline = jobDeadlineField.getText();
@@ -265,6 +278,8 @@ public class JobOwner {
             });
 
             panel.add(instructions);
+            panel.add(Box.createRigidArea(new Dimension(0, 20)));
+            panel.add(jobIdPanel);
             panel.add(Box.createRigidArea(new Dimension(0, 20)));
             panel.add(jobNamePanel);
             panel.add(Box.createRigidArea(new Dimension(0, 10)));
