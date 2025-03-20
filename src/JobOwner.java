@@ -75,9 +75,9 @@ public class JobOwner {
 	// buttons
 	public static class MainMenuScreen {
 		private JFrame frame;
-		private JButton newJobButton, oldJobButton, currentJobButton;
+		private JButton newJobButton, oldJobButton, currentJobButton, backButton;
 		private JLabel mainMenuLabel;
-		private JPanel panel;
+		private JPanel panel, backButtonPanel;
 
         public MainMenuScreen(String username) { // Updated constructor
             frame = new JFrame("Select Job Option");
@@ -123,6 +123,17 @@ public class JobOwner {
                 frame.dispose();
                 new CurrentJobScreen(username); // Pass username
             });
+            
+            backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            backButton = new JButton("Back");
+            backButton.setPreferredSize(new Dimension(90, 25));
+            backButton.setBounds(50, 200, 90, 25);
+            backButton.addActionListener(e -> {
+                frame.dispose();
+                new InitialScreen();
+            });
+
+            backButtonPanel.add(backButton);
 
 			panel.add(mainMenuLabel);
 			panel.add(Box.createRigidArea(new Dimension(0, 20))); // Adds space between title and buttons
@@ -131,8 +142,10 @@ public class JobOwner {
 			panel.add(oldJobButton);
 			panel.add(Box.createRigidArea(new Dimension(0, 10))); // Adds space between buttons
 			panel.add(currentJobButton);
-
+			panel.add(Box.createRigidArea(new Dimension(0, 20))); 
+			
 			frame.add(panel, BorderLayout.CENTER);
+			frame.add(backButtonPanel, BorderLayout.SOUTH);
 			frame.setVisible(true);
 		}
 	}
