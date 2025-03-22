@@ -27,7 +27,28 @@ public class JobOwner {
 		this.jobInfo = jobInfo;
 		this.jobDeadline = jobDeadline;
 	}
-
+	
+	//getters
+	public String getUsername() {
+		return username;
+		
+	}
+	public int getJobID() {
+		return jobID;
+	}
+	public int getJobDuration() {
+		return jobDuration;
+	}
+	public String getJobName() {
+		return jobName;
+	}
+	public String getJobInfo() {
+		return jobInfo;
+	}
+	public String getJobDeadline() {
+		return jobDeadline;
+	}
+//end of getters
     public void saveJobToCSV(int jobID, String jobName, String jobInfo, int jobDuration, String jobDeadline) {
     	String fileName =  username + "Jobs.csv"; 
     	System.out.println(username);
@@ -263,6 +284,10 @@ public class JobOwner {
 
                 JobOwner newJob = new JobOwner(username, newJobID, newTimeMin, newJobName, newJobInfo, newJobDeadline);
                 newJob.saveJobToCSV(newJobID, newJobName, newJobInfo, newTimeMin, newJobDeadline);
+                
+                
+                //add job to queue
+                Controller.getJobInfo(newJob);
 
 				JOptionPane.showMessageDialog(frame, "Job Saved Successfully!");
 
