@@ -64,4 +64,8 @@ public ArrayList<Integer> calculateCompletionTimes() {
     return completionTimes;
 }
 
+public Queue<JobOwner> getQueue() {
+    return queue;
+}
+
 }

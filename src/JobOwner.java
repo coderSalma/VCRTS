@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.swing.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Queue;
 
 public class JobOwner {
 	private String username;
@@ -116,8 +117,8 @@ public class JobOwner {
 			mainMenuLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 			newJobButton = new JButton("New Job");
-			oldJobButton = new JButton("Old Job(s)");
-			currentJobButton = new JButton("Current Job(s)");
+			oldJobButton = new JButton("All Jobs");
+			currentJobButton = new JButton("Current Jobs");
 
 			Dimension buttonSize = new Dimension(120, 30);
 			newJobButton.setMaximumSize(buttonSize);
@@ -328,10 +329,11 @@ public class JobOwner {
 		private JFrame frame;
 		private JLabel oldJobLabel;
 		private JPanel panel;
+		private JTextArea jobsArea;
 
         public OldJobScreen(String username) {
-            frame = new JFrame("Old Job");
-            frame.setSize(400, 200);
+            frame = new JFrame("User Jobs");
+            frame.setSize(600, 400);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
             frame.getContentPane().setBackground(new Color(204, 229, 255));
@@ -339,33 +341,59 @@ public class JobOwner {
 			panel = new JPanel();
 			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 			panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-			// panel.setBackground(new Color(204, 229, 255));
 
-			oldJobLabel = new JLabel("Old Jobs will be here.", SwingConstants.CENTER);
+			oldJobLabel = new JLabel(username + "\'s Jobs", SwingConstants.CENTER);
 			oldJobLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
 			oldJobLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 			panel.add(oldJobLabel);
+			
+			jobsArea = new JTextArea(20, 40);
+	        jobsArea.setEditable(false);
+	        jobsArea.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+	        JScrollPane jobsScrollPane = new JScrollPane(jobsArea);
+	        panel.add(jobsScrollPane);
 
 			frame.add(panel, BorderLayout.CENTER);
-			frame.setVisible(true);
+			
 			
 			JButton backButton = new JButton("Back");
 			panel.add(backButton);
 
+			loadCurrentJobs(username);
+			
 			backButton.addActionListener(e -> {
 				frame.dispose();
 				//new MainMenuScreen();
 				new JobOwner(username);
 			});
+			
+			frame.setVisible(true);
 		}
+        
+       //show all jobs for user
+	    private void loadCurrentJobs(String username) {
+	        JobOwner jobOwner = new JobOwner(username);
+	        List<JobOwner> jobs = jobOwner.readJobFromCSV();
+
+	        if (jobs.isEmpty()) {
+	            jobsArea.setText("No current jobs.");
+	        } else {
+	            StringBuilder jobsOutput = new StringBuilder("\n");
+	            for (JobOwner job : jobs) {
+	                jobsOutput.append("ID: ").append(job.getJobID())
+	                          .append(", Name: ").append(job.getJobName())
+	                          .append(", Duration: ").append(job.getJobDuration()).append(" hours\n");
+	            }
+	            jobsArea.setText(jobsOutput.toString());
+	        }
+	    }
 	}
 
 	// This will display Current Jobs, the bills (whether they've been paid or not),
 	// the info they were prompted for when making the job
 	// And for now, whether or not the job is in progress or not
 
-	
 	public static class CurrentJobScreen {
 		private JFrame frame;
 		private JLabel currentJobLabel;
@@ -392,13 +420,13 @@ public class JobOwner {
 			currentJobLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 			panel.add(currentJobLabel);
 			
-	        jobsArea = new JTextArea(5, 40);
+	        jobsArea = new JTextArea(10, 40);
 	        jobsArea.setEditable(false);
 	        jobsArea.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 	        JScrollPane jobsScrollPane = new JScrollPane(jobsArea);
 	        panel.add(jobsScrollPane);
 
-	        completionTimesArea = new JTextArea(5, 40);
+	        completionTimesArea = new JTextArea(10, 40);
 	        completionTimesArea.setEditable(false);
 	        completionTimesArea.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 	        JScrollPane completionScrollPane = new JScrollPane(completionTimesArea);
@@ -431,27 +459,26 @@ public class JobOwner {
 	        });
 	        panel.add(backButton);
 	        
-	        loadCurrentJobs(username);
+	        displayJobsFromQueue();
 
 	        frame.add(panel, BorderLayout.CENTER);
 	        frame.setVisible(true);
 	    }
         
-       //show all jobs for user
-	    private void loadCurrentJobs(String username) {
-	        JobOwner jobOwner = new JobOwner(username);
-	        List<JobOwner> jobs = jobOwner.readJobFromCSV();
+        //display jobs in queue
+        private void displayJobsFromQueue() {
+            Queue<JobOwner> jobsQueue = controller.getQueue();
 
-	        if (jobs.isEmpty()) {
-	            jobsArea.setText("No current jobs.");
-	        } else {
-	            StringBuilder jobsOutput = new StringBuilder("Current Jobs:\n");
-	            for (JobOwner job : jobs) {
-	                jobsOutput.append("ID: ").append(job.getJobID())
-	                          .append(", Name: ").append(job.getJobName())
-	                          .append(", Duration: ").append(job.getJobDuration()).append(" hours\n");
-	            }
-	            jobsArea.setText(jobsOutput.toString());
-	        }
-	    }
-	}}
+            if (jobsQueue.isEmpty()) {
+                jobsArea.setText("No current jobs in the queue.");
+            } else {
+                StringBuilder jobsOutput = new StringBuilder("Current Jobs in Queue:\n");
+                for (JobOwner job : jobsQueue) {
+                    jobsOutput.append("ID: ").append(job.getJobID())
+                              .append(", Name: ").append(job.getJobName())
+                              .append(", Duration: ").append(job.getJobDuration()).append(" hours\n");
+                }
+                jobsArea.setText(jobsOutput.toString());
+            }
+        }
+    }}
