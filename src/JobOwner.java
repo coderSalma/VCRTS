@@ -139,6 +139,7 @@ public class JobOwner {
                 new OldJobScreen(username); // Pass username
             });
 
+            
             currentJobButton.addActionListener(e -> {
                 frame.dispose();
                 new CurrentJobScreen(username); // Pass username
@@ -390,6 +391,7 @@ public class JobOwner {
 	    }
 	}
 
+
 	// This will display Current Jobs, the bills (whether they've been paid or not),
 	// the info they were prompted for when making the job
 	// And for now, whether or not the job is in progress or not
@@ -481,4 +483,4 @@ public class JobOwner {
                 jobsArea.setText(jobsOutput.toString());
             }
         }
-    }}
+	}}
