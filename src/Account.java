@@ -1,12 +1,12 @@
 public class Account {
     private String username;
     private String password;
-    private boolean type; // true - vehicle owner, false - job owner
-
-    public Account(String username, String password, boolean type) {
+    //private boolean type; // true - vehicle owner, false - job owner
+    
+    public Account(String username, String password/*, boolean type*/) {
         this.username = username;
         this.password = password;
-        this.type = type;
+        //this.type = type;
     }
 
     public String getUsername() {
@@ -17,10 +17,12 @@ public class Account {
         return password;
     }
 
-    public boolean getAccountType() {
-        return type;
-    }
+    //public boolean getAccountType() {
+        //return type;
+    //}
+    
     public boolean checkPassword(String inputPassword) {
         return this.password.equals(inputPassword);
     }
+    
 }

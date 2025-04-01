@@ -10,10 +10,9 @@ public class InitialScreen extends JFrame{
 
         //create frame
         setTitle("VCRTS - Vehicular Cloud Real Time System");
-        setSize(400, 200);
+        setSize(450, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setVisible(true);
 
        //main panel
        panel = new JPanel();
@@ -73,6 +72,7 @@ public class InitialScreen extends JFrame{
         panel.add(signUpButton);
 
         add(panel, BorderLayout.CENTER);
+        setVisible(true);
         
     }
 

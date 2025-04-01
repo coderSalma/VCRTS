@@ -1,6 +1,14 @@
 import java.io.*;
 
-public class AccountAuthentication {
+public class AccountAuthentication 
+{
+	private static Account currentAccount;
+	
+	public static Account getCurrentAccount() 
+	{
+		return currentAccount; 
+	}
+	
     public static boolean authenticateAccount(String inputUsername, String inputPassword) {
         boolean authenticated = false;
         try (FileReader reader = new FileReader("Accounts.csv");
@@ -17,16 +25,9 @@ public class AccountAuthentication {
                 // below code was written by manasa srinivasa: 
                 if (inputUsername.equals(tempUsername) && inputPassword.equals(tempPassword)) {
                     authenticated = true;
-                    if (tempType) {
-                        System.out.println("Welcome, Vehicle Owner!");
-                        // Redirect to vehicle owner page
-                        VehicleOwner.getMainScreen();
-                        //adding the username so it can be referenced to make a new file
-                    } else {
-                        System.out.println("Welcome, Job Owner!");
-                        // Redirect to job owner page
-                        new JobOwner(tempUsername);
-                    }
+                    
+                    currentAccount = new Account(tempUsername, tempPassword /*,tempType*/);
+                    new DashboardScreen();
                 }
                 input = buffer.readLine();
             }

@@ -101,7 +101,7 @@ public class VehicleOwner {
             backButton.setBounds(50, 200, 90, 25);
             backButton.addActionListener(e -> {
                 frame.dispose();
-                new InitialScreen();
+                new DashboardScreen();
             });
 
             backButtonPanel.add(backButton);
