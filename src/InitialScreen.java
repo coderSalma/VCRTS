@@ -10,15 +10,15 @@ public class InitialScreen extends JFrame{
 
         //create frame
         setTitle("VCRTS - Vehicular Cloud Real Time System");
-        setSize(400, 200);
+        setSize(450, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+        setLocationRelativeTo(null);
 
        //main panel
        panel = new JPanel();
        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-       panel.setBackground(new Color(204, 229, 255));
+       //panel.setBackground(new Color(204, 229, 255));
        
        //welcome message
        welcomeLabel = new JLabel("Welcome to the Vehicular Cloud Real Time System!", SwingConstants.CENTER);
@@ -49,14 +49,14 @@ public class InitialScreen extends JFrame{
         //open login page and close window
         logInButton.addActionListener(e -> 
         {
-            //new Login(); 
+            new Login();
             dispose(); 
         });
-
+        
         //open sign up page and close window
         signUpButton.addActionListener(e -> {
-            //new Signup();
-            dispose();
+        	new Signup();
+            //dispose();
         });
 
         panel.add(welcomeLabel);
@@ -72,6 +72,7 @@ public class InitialScreen extends JFrame{
         panel.add(signUpButton);
 
         add(panel, BorderLayout.CENTER);
+        setVisible(true);
         
     }
 
