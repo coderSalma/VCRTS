@@ -247,6 +247,18 @@ public class ControllerScreen {
             }
         }
     }
+    
+    public void loadAcceptedJobs() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("jobs.csv"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                // Add these parts to your GUI table/list/etc.
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         new ControllerScreen();
