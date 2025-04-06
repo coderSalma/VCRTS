@@ -28,6 +28,7 @@ public class AccountAuthentication
                     
                     currentAccount = new Account(tempUsername, tempPassword /*,tempType*/);
                     new DashboardScreen();
+                    new ControllerScreen();
                 }
                 input = buffer.readLine();
             }

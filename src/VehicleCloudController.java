@@ -74,7 +74,7 @@ public class VehicleCloudController {
             );
 
             if (response == JOptionPane.YES_OPTION) {
-                saveToCSV("SavedJobs.csv", jobData);
+                saveToCSV("Jobs.csv", jobData);
                 out.println("Job accepted and saved.");
             } else {
                 out.println("Job rejected.");
