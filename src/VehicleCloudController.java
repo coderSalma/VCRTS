@@ -1,11 +1,16 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.*;
 import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class VehicleCloudController {
-
+	
     public static final int PORT = 12345; // Server port number
 
     public static void main(String[] args) {
@@ -74,7 +79,7 @@ public class VehicleCloudController {
             );
 
             if (response == JOptionPane.YES_OPTION) {
-                saveToCSV("jobs.csv", jobData);
+                saveToCSV("Jobs.csv", jobData);
                 out.println("Job accepted and saved.");
             } else {
                 out.println("Job rejected.");
@@ -83,12 +88,16 @@ public class VehicleCloudController {
 
         // Prompt user to accept/reject vehicle, and save if accepted
         private void handleVehicle(String vehicleData, PrintWriter out) {
+        	
+        	System.out.println("Opening confirmation dialog...");
+
             int response = JOptionPane.showConfirmDialog(
                 null,
                 "Do you accept this vehicle?\n" + vehicleData,
                 "Vehicle Request",
                 JOptionPane.YES_NO_OPTION
             );
+            System.out.println("Opening confirmation dialog...");
 
             if (response == JOptionPane.YES_OPTION) {
                 saveToCSV("Vehicles.csv", vehicleData);
@@ -99,7 +108,7 @@ public class VehicleCloudController {
         }
 
         // Append data to the specified CSV file with a timestamp
-        private void saveToCSV(String filename, String data) {
+       private void saveToCSV(String filename, String data) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
                 String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
                 writer.write(data + "," + timestamp);
@@ -108,5 +117,7 @@ public class VehicleCloudController {
                 e.printStackTrace();
             }
         }
+        
+        
     }
 }

@@ -103,7 +103,13 @@ public class ControllerScreen {
 
         JButton calculateCompletionButton = new JButton("Calculate Completion Times");
         calculateCompletionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+        
+        JButton refreshButton = new JButton("Refresh Job List");
+        refreshButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        refreshButton.addActionListener(e -> displayJobsFromQueue());
+        panel.add(refreshButton);
+        
+        
         // Read directly from arrayList of calculated times
         calculateCompletionButton.addActionListener(e -> {
             ArrayList<Integer> completionTimes = controller.calculateCompletionTimes();

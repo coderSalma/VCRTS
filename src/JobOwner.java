@@ -487,7 +487,7 @@ public class JobOwner {
 			
 			out.println(jobData);
 			String response = in.readLine();
-			JOptionPane.showMessageDialog(null, response);
+			JOptionPane.showMessageDialog(null, response); 
 
 			socket.close();
 		} catch (IOException e) {
