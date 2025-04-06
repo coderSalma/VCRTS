@@ -35,8 +35,15 @@ public class ControllerScreen {
         frame.add(initialPanel, BorderLayout.CENTER);
         frame.setVisible(true);
 
-        // Start the server in a new thread
-        new Thread(this::startServer).start();
+        // Start the VehicleCloudController in a new thread
+        new Thread(() -> {
+            try {
+                // Initialize and start the VehicleCloudController server
+                VehicleCloudController.main(new String[0]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private void createMainScreen() {
@@ -209,60 +216,6 @@ public class ControllerScreen {
                         .append(", Duration: ").append(job.getJobDuration()).append(" hours\n");
             }
             jobsArea.setText(jobsOutput.toString());
-        }
-    }
-
-    // Start the server and listen for incoming job/vehicle requests
-    private void startServer() {
-        try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT)) {
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                new Thread(new ClientHandler(clientSocket)).start();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Client handler for accepting job or vehicle data and updating UI
-    private class ClientHandler implements Runnable {
-        private Socket socket;
-
-        public ClientHandler(Socket socket) {
-            this.socket = socket;
-        }
-
-        @Override
-        public void run() {
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
-
-                String data = in.readLine();
-
-                if (data != null) {
-                    // Here you can either process jobs or vehicles based on your logic
-                    SwingUtilities.invokeLater(() -> {
-                        // Update UI in real-time
-                        jobsArea.append("New job received: " + data + "\n");
-                    });
-                } else {
-                    out.println("No data received.");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    
-    public void loadAcceptedJobs() {
-        try (BufferedReader reader = new BufferedReader(new FileReader("jobs.csv"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                // Add these parts to your GUI table/list/etc.
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
