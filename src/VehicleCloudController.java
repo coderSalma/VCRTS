@@ -77,6 +77,7 @@ public class VehicleCloudController {
                 "Job Request",
                 JOptionPane.YES_NO_OPTION
             );
+            
 
             if (response == JOptionPane.YES_OPTION) {
                 saveToCSV("Jobs.csv", jobData);
