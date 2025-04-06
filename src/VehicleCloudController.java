@@ -1,20 +1,18 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import javax.swing.*;
 import java.io.*;
 import java.net.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import java.util.*;
 
 public class VehicleCloudController {
-	
+
     public static final int PORT = 12345; // Server port number
+    private static final Controller controller = Controller.getInstance(); // Controller instance
+    private static JTextArea jobsArea;
 
     public static void main(String[] args) {
         // Start the server
+        SwingUtilities.invokeLater(() -> new VehicleCloudController());
         new VehicleCloudController().startServer();
     }
 
@@ -71,45 +69,59 @@ public class VehicleCloudController {
 
         // Prompt user to accept/reject job, and save if accepted
         private void handleJob(String jobData, PrintWriter out) {
-            int response = JOptionPane.showConfirmDialog(
-                null,
-                "Do you accept this job?\n" + jobData,
-                "Job Request",
-                JOptionPane.YES_NO_OPTION
-            );
-            
-
-            if (response == JOptionPane.YES_OPTION) {
-                saveToCSV("Jobs.csv", jobData);
-                out.println("Job accepted and saved.");
-            } else {
-                out.println("Job rejected.");
-            }
+            // Use SwingUtilities.invokeLater to ensure dialog is shown on the EDT thread
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    int response = JOptionPane.showConfirmDialog(
+                        null, // No parent component (centers the dialog)
+                        "Do you accept this job?\n" + jobData, // Job data message
+                        "Job Request", // Dialog title
+                        JOptionPane.YES_NO_OPTION // Show Yes and No buttons
+                    );
+        
+                    // Process response
+                    if (response == JOptionPane.YES_OPTION) {
+                        // Only save to CSV if accepted
+                        saveToCSV("Jobs.csv", jobData);
+                        out.println("Job accepted and saved.");
+                    } else {
+                        // Do not save to CSV if rejected
+                        out.println("Job rejected.");
+                    }
+                }
+            });
         }
+        
+        
 
         // Prompt user to accept/reject vehicle, and save if accepted
         private void handleVehicle(String vehicleData, PrintWriter out) {
-        	
-        	System.out.println("Opening confirmation dialog...");
-
-            int response = JOptionPane.showConfirmDialog(
-                null,
-                "Do you accept this vehicle?\n" + vehicleData,
-                "Vehicle Request",
-                JOptionPane.YES_NO_OPTION
-            );
-            System.out.println("Opening confirmation dialog...");
-
-            if (response == JOptionPane.YES_OPTION) {
-                saveToCSV("Vehicles.csv", vehicleData);
-                out.println("Vehicle accepted and saved.");
-            } else {
-                out.println("Vehicle rejected.");
-            }
+            // Ensure the dialog is shown on the EDT thread
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    int response = JOptionPane.showConfirmDialog(
+                        null, // Parent component, null centers the dialog on the screen
+                        "Do you accept this vehicle?\n" + vehicleData, // Message to display
+                        "Vehicle Request", // Dialog title
+                        JOptionPane.YES_NO_OPTION // Show Yes and No buttons
+                    );
+        
+                    // Handle the response
+                    if (response == JOptionPane.YES_OPTION) {
+                        saveToCSV("Vehicles.csv", vehicleData);
+                        out.println("Vehicle accepted and saved.");
+                    } else {
+                        out.println("Vehicle rejected.");
+                    }
+                }
+            });
         }
+        
 
         // Append data to the specified CSV file with a timestamp
-       private void saveToCSV(String filename, String data) {
+        private void saveToCSV(String filename, String data) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
                 String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
                 writer.write(data + "," + timestamp);
@@ -118,7 +130,32 @@ public class VehicleCloudController {
                 e.printStackTrace();
             }
         }
-        
-        
+    }
+
+    // JobOwner class to hold job-related information
+    public static class JobOwner {
+        private String jobName;
+        private int jobID;
+        private int jobDuration;
+        private String jobInfo;
+        private String jobDeadline;
+        private String username;
+
+        public JobOwner(String jobName, int jobID, int jobDuration, String jobInfo, String jobDeadline, String username) {
+            this.jobName = jobName;
+            this.jobID = jobID;
+            this.jobDuration = jobDuration;
+            this.jobInfo = jobInfo;
+            this.jobDeadline = jobDeadline;
+            this.username = username;
+        }
+
+        // Getters for job attributes
+        public String getJobName() { return jobName; }
+        public int getJobID() { return jobID; }
+        public int getJobDuration() { return jobDuration; }
+        public String getJobInfo() { return jobInfo; }
+        public String getJobDeadline() { return jobDeadline; }
+        public String getUsername() { return username; }
     }
 }
