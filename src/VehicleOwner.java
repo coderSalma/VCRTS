@@ -466,28 +466,29 @@ public class VehicleOwner {
 		}
 	}
 
-	
-	public static void promptVCC(String ownerID, String vehicleID, String model, String vin, int residencyTime) {
-		// TODO Auto-generated method stub
-
-		try {
-
-			Socket socket = new Socket(SERVER_ADDRESS, PORT);
-			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
+	public static void promptVCC(String ownerID, String vehicleID, String model,String vin, int residencyTime)
+	{
+		try (Socket socket = new Socket(SERVER_ADDRESS, PORT);
+		PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) 
+		{
+			socket.setSoTimeout(0); 
 			String vehicleData = "VEHICLE:" + ownerID + "," + vehicleID + "," + model + "," + vin + "," + residencyTime;
-
-
 			out.println(vehicleData);
-			String response = in.readLine();
-			JOptionPane.showMessageDialog(null, response);
 
-			socket.close();
+			String response = in.readLine();
+
+			if (response != null) 
+			{
+				JOptionPane.showMessageDialog(null, response);
+			}
+
 		} catch (IOException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Error connecting to VC Controller: " + e.getMessage());
+
+			if (!e.getMessage().contains("Connection reset"))
+			{
+				JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(),"Connection Error",JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
-
 }

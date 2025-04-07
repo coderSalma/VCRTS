@@ -66,58 +66,84 @@ public class VehicleCloudController {
                 e.printStackTrace();
             }
         }
-
-        // Prompt user to accept/reject job, and save if accepted
+        
         private void handleJob(String jobData, PrintWriter out) {
-            // Use SwingUtilities.invokeLater to ensure dialog is shown on the EDT thread
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    int response = JOptionPane.showConfirmDialog(
-                        null, // No parent component (centers the dialog)
-                        "Do you accept this job?\n" + jobData, // Job data message
-                        "Job Request", // Dialog title
-                        JOptionPane.YES_NO_OPTION // Show Yes and No buttons
-                    );
-        
-                    // Process response
-                    if (response == JOptionPane.YES_OPTION) {
-                        // Only save to CSV if accepted
-                        saveToCSV("Jobs.csv", jobData);
-                        JOptionPane.showMessageDialog(null, "Your job was approved!");
-                    } else {
-                        // Do not save to CSV if rejected
-                    	JOptionPane.showMessageDialog(null, "Your job was rejected.");
-                    }
-                }
-            });
-        }
-        
-        
+            try {
+                final int[] responseHolder = new int[1];
 
+                Runnable dialogTask = () -> {
+                    String[] parts = jobData.split(",", -1);
+                    String formattedMessage = String.format(
+                        "Job ID: %s%nJob Name: %s%nJob Info: %s%nDuration: %s%nDeadline: %s",
+                        parts.length > 1 ? parts[1] : "N/A",
+                        parts.length > 2 ? parts[2] : "N/A",
+                        parts.length > 3 ? parts[3] : "N/A",
+                        parts.length > 4 ? parts[4] : "N/A"
+                    );
+
+                    responseHolder[0] = JOptionPane.showConfirmDialog(
+                        null,
+                        formattedMessage,
+                        "Job Request",
+                        JOptionPane.YES_NO_OPTION
+                    );
+                };
+
+                if (SwingUtilities.isEventDispatchThread()) {
+                    dialogTask.run();
+                } else {
+                    SwingUtilities.invokeAndWait(dialogTask);
+                }
+
+                int response = responseHolder[0];
+
+                if (response == JOptionPane.YES_OPTION) {
+                    out.println("JOB_ACCEPTED");
+                    out.flush();
+                    saveToCSV("Jobs.csv", jobData);
+                    System.out.println("DEBUG: Job approved.");
+                } else {
+                    out.println("JOB_REJECTED");
+                    out.flush();
+                    System.out.println("DEBUG: Job rejected.");
+                }
+            } catch (Exception e) {
+                System.err.println("Error in handleJob: " + e.getMessage());
+                out.println("JOB_REJECTED:ERROR");
+                out.flush();
+            }
+        }
+
+        
         // Prompt user to accept/reject vehicle, and save if accepted
         private void handleVehicle(String vehicleData, PrintWriter out) {
-            // Ensure the dialog is shown on the EDT thread
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    int response = JOptionPane.showConfirmDialog(
-                        null, // Parent component, null centers the dialog on the screen
-                        "Do you accept this vehicle?\n" + vehicleData, // Message to display
-                        "Vehicle Request", // Dialog title
-                        JOptionPane.YES_NO_OPTION // Show Yes and No buttons
-                    );
-        
-                    // Handle the response
-                    if (response == JOptionPane.YES_OPTION) {
-                        saveToCSV("Vehicles.csv", vehicleData);
-                        JOptionPane.showMessageDialog(null, "Your vehicle was approved!");
-                    } else {
-                    	 JOptionPane.showMessageDialog(null, "Your vehicle was rejected.");
-                    }
+            SwingUtilities.invokeLater(() -> {
+                String[] parts = vehicleData.split(",", -1);
+                String formattedMessage = String.format(
+                    "Owner ID: %s%nVehicle ID: %s%nModel %s%nVIN %s%nResidency Time(hrs): %s",
+                    parts.length > 0 ? parts[0] : "N/A",
+                    parts.length > 1 ? parts[1] : "N/A",
+                    parts.length > 2 ? parts[2] : "N/A",
+                    parts.length > 3 ? parts[3] : "N/A",
+                    parts.length > 4 ? parts[4] : "N/A"
+                );
+
+                int response = JOptionPane.showConfirmDialog(
+                    null,
+                    formattedMessage,
+                    "Vehicle Request",
+                    JOptionPane.YES_NO_OPTION
+                );
+
+                if (response == JOptionPane.YES_OPTION) {
+                    saveToCSV("Vehicles.csv", vehicleData);
+                    JOptionPane.showMessageDialog(null, "Your vehicle was approved!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Your vehicle was rejected.");
                 }
             });
         }
+
         
 
         // Append data to the specified CSV file with a timestamp

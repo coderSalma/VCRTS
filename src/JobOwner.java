@@ -1,12 +1,13 @@
 import java.awt.*;
 import java.io.*;
-import java.net.Socket;
+import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Queue;
+
 
 public class JobOwner {
 	private String username;
@@ -183,6 +184,7 @@ public class JobOwner {
 
 		public NewJobScreen(String username) { // Added username parameter
 			this.username = username;
+			
 			frame = new JFrame("New Job Submission");
 			frame.setSize(600, 500);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -270,25 +272,42 @@ public class JobOwner {
 
 			// Button Action Listeners
 			submitJobButton.addActionListener(e -> {
-				int newJobID = Integer.parseInt(jobIdField.getText());
-				String newJobName = jobNameField.getText();
-				String newJobInfo = jobInfoField.getText();
-				String newJobDeadline = jobDeadlineField.getText();
-				int newTimeMin = Integer.parseInt(timeMinField.getText());
+			    new Thread(() -> {
+			        try {
+			            int newJobID = Integer.parseInt(jobIdField.getText());
+			            String newJobName = jobNameField.getText();
+			            String newJobInfo = jobInfoField.getText();
+			            String newJobDeadline = jobDeadlineField.getText();
+			            int newTimeMin = Integer.parseInt(timeMinField.getText());
 
-				JobOwner newJob = new JobOwner(username, newJobID, newTimeMin, newJobName, newJobInfo, newJobDeadline);
-				newJob.promptVCC(newJobID, newJobName, newJobInfo, newTimeMin, newJobDeadline);
+			            Controller controller = Controller.getInstance();
 
-				// get single instance instead of creating new one every time
-				Controller controller = Controller.getInstance();
-				controller.addToQueue(newJob);
+			            JobOwner newJob = new JobOwner(newJobName, newJobID, newTimeMin, newJobInfo, newJobDeadline, username);
+			            boolean approved = newJob.promptVCC(newJobID, newJobName, newJobInfo, newTimeMin, newJobDeadline);
 
-				jobIdField.setText("");
-				jobNameField.setText("");
-				jobInfoField.setText("");
-				timeMinField.setText("");
-				jobDeadlineField.setText("");
+			            if (approved) {
+			                controller.addToQueue(newJob);
+			                JOptionPane.showMessageDialog(null, "Job submitted and approved.");
+			            } else {
+			                JOptionPane.showMessageDialog(null, "Job was rejected by the controller.");
+			            }
+
+			            SwingUtilities.invokeLater(() -> {
+			                jobIdField.setText("");
+			                jobNameField.setText("");
+			                jobInfoField.setText("");
+			                timeMinField.setText("");
+			                jobDeadlineField.setText("");
+			            });
+			        } catch (Exception ex) {
+			            ex.printStackTrace();
+			            SwingUtilities.invokeLater(() ->
+			                JOptionPane.showMessageDialog(null, "Error submitting job: " + ex.getMessage())
+			            );
+			        }
+			    }).start();
 			});
+
 
 			backButton.addActionListener(e -> {
 				frame.dispose();
@@ -472,27 +491,24 @@ public class JobOwner {
 		}
 	}
 
-	public void promptVCC(int newJobID, String newJobName, String newJobInfo, int newTimeMin, String newJobDeadline) {
-		// TODO Auto-generated method stub
+	public boolean promptVCC(int newJobID, String newJobName, String newJobInfo, int newTimeMin, String newJobDeadline) 
+	{
+		try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+		
+		PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) 
+		{
+			out.println("JOB:" + newJobID + "," + newJobName + "," + newJobInfo + "," + newTimeMin + "," + newJobDeadline);
 
-		try {
-			
-			Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
-			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-			String jobData = "JOB:" + newJobID + "," + newJobName + "," + newJobInfo + "," + newTimeMin + ","
-					+ newJobDeadline;
-
-			
-			out.println(jobData);
 			String response = in.readLine();
-			JOptionPane.showMessageDialog(null, response); 
+			System.out.println(response);
+			
+			return "JOB_ACCEPTED".equals(response);
 
-			socket.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Error connecting to VC Controller: " + e.getMessage());
+		} catch (Exception e) {
+		
+			return false;
 		}
 	}
+
 }
