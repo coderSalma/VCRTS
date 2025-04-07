@@ -2,11 +2,11 @@ import java.io.*;
 
 public class AccountAuthentication 
 {
-	private static Account currentAccount;
+	private static Account CurrentAccount;
 	
 	public static Account getCurrentAccount() 
 	{
-		return currentAccount; 
+		return CurrentAccount; 
 	}
 	
     public static boolean authenticateAccount(String inputUsername, String inputPassword) {
@@ -26,7 +26,7 @@ public class AccountAuthentication
                 if (inputUsername.equals(tempUsername) && inputPassword.equals(tempPassword)) {
                     authenticated = true;
                     
-                    currentAccount = new Account(tempUsername, tempPassword /*,tempType*/);
+                    CurrentAccount = new Account(tempUsername, tempPassword /*,tempType*/);
                     new DashboardScreen();
                     new ControllerScreen();
                 }
