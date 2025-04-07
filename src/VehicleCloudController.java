@@ -84,10 +84,10 @@ public class VehicleCloudController {
                     if (response == JOptionPane.YES_OPTION) {
                         // Only save to CSV if accepted
                         saveToCSV("Jobs.csv", jobData);
-                        out.println("Job accepted and saved.");
+                        JOptionPane.showMessageDialog(null, "Your job was approved!");
                     } else {
                         // Do not save to CSV if rejected
-                        out.println("Job rejected.");
+                    	JOptionPane.showMessageDialog(null, "Your job was rejected.");
                     }
                 }
             });
@@ -111,9 +111,9 @@ public class VehicleCloudController {
                     // Handle the response
                     if (response == JOptionPane.YES_OPTION) {
                         saveToCSV("Vehicles.csv", vehicleData);
-                        out.println("Vehicle accepted and saved.");
+                        JOptionPane.showMessageDialog(null, "Your vehicle was approved!");
                     } else {
-                        out.println("Vehicle rejected.");
+                    	 JOptionPane.showMessageDialog(null, "Your vehicle was rejected.");
                     }
                 }
             });
