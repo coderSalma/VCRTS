@@ -75,6 +75,7 @@ public class VehicleCloudController {
                     String[] parts = jobData.split(",", -1);
                     String formattedMessage = String.format(
                         "Job ID: %s%nJob Name: %s%nJob Info: %s%nDuration: %s%nDeadline: %s",
+                        parts.length > 0 ? parts[1] : "N/A",
                         parts.length > 1 ? parts[1] : "N/A",
                         parts.length > 2 ? parts[2] : "N/A",
                         parts.length > 3 ? parts[3] : "N/A",
