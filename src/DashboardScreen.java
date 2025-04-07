@@ -8,8 +8,9 @@ public class DashboardScreen extends JFrame {
     public DashboardScreen() {
         setTitle("Client");
         setSize(450, 300);
+        setLocation(-600, 300); 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        //setLocationRelativeTo(null);
         setVisible(true);
         
         JPanel panel = new JPanel();

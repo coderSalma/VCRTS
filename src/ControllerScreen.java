@@ -23,9 +23,10 @@ public class ControllerScreen {
         controller = Controller.getInstance();
 
         frame = new JFrame("Cloud Controller");
-        frame.setSize(600, 400);
+        frame.setSize(450, 300);
+        frame.setLocation(600, 300); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
+        //frame.setLocationRelativeTo(null);
         frame.getContentPane().setBackground(new Color(204, 229, 255));
 
         createMainScreen();
