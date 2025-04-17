@@ -16,4 +16,44 @@ public class DBConnection
             e.printStackTrace();
         }
     }
+
+    public static void insertJob(int clientId, String name, int duration, String deadline) {
+        String url = "jdbc:mysql://localhost:3306/cus1166VCTRS";
+        String username = "cus1166";
+        String password = "cus1166";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, username, password);
+            String sql = "INSERT INTO Jobs (ClientID, Name, Duration, Deadline) VALUES (" 
+                       + clientId + ", '" + name + "', " + duration + ", '" + deadline + "')";
+            Statement statement = conn.createStatement();
+            int row = statement.executeUpdate(sql);
+            if (row > 0)
+                System.out.println("Job data inserted!");
+
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error inserting job: " + e.getMessage());
+        }
+    }
+
+    public static void insertVehicle(int ownerId, String model, String arrivalTime, String departureTime) {
+        String url = "jdbc:mysql://localhost:3306/cus1166VCTRS";
+        String username = "cus1166";
+        String password = "cus1166";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, username, password);
+            String sql = "INSERT INTO Vehicles (OwnerID, Model, ArrivalTime, DepartureTime) VALUES (" 
+                       + ownerId + ", '" + model + "', '" + arrivalTime + "', '" + departureTime + "')";
+            Statement statement = conn.createStatement();
+            int row = statement.executeUpdate(sql);
+            if (row > 0)
+                System.out.println("Vehicle data inserted!");
+
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error inserting vehicle: " + e.getMessage());
+        }
+    }
 }

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Queue;
 import javax.swing.*;
 
+
+
 public class ControllerScreen {
     private Controller controller;
     private JFrame frame;
@@ -206,19 +208,70 @@ public class ControllerScreen {
 
     private void displayJobsFromQueue() {
         Queue<JobOwner> jobsQueue = controller.getQueue();
-
+    
+        panel.removeAll(); // Clear the panel
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    
+        JLabel titleLabel = new JLabel("Current Jobs in Queue");
+        titleLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(titleLabel);
+    
         if (jobsQueue.isEmpty()) {
-            jobsArea.setText("No current jobs in the queue.");
+            JLabel noJobsLabel = new JLabel("No current jobs in the queue.");
+            noJobsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panel.add(noJobsLabel);
         } else {
-            StringBuilder jobsOutput = new StringBuilder("Current Jobs in Queue:\n");
             for (JobOwner job : jobsQueue) {
-                jobsOutput.append("ID: ").append(job.getJobID())
-                        .append(", Name: ").append(job.getJobName())
-                        .append(", Duration: ").append(job.getJobDuration()).append(" hours\n");
+                JLabel jobLabel = new JLabel("Job ID: " + job.getJobID() +
+                    " | Name: " + job.getJobName() +
+                    " | Duration: " + job.getJobDuration() +
+                    "h | Deadline: " + job.getJobDeadline());
+                jobLabel.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+                jobLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                panel.add(jobLabel);
+    
+                JButton acceptButton = new JButton("Accept");
+                JButton rejectButton = new JButton("Reject");
+    
+                // Accept button: insert job into DB
+                acceptButton.addActionListener(e -> {
+                    DBConnection.insertJob(
+                        job.getJobID(),
+                        job.getJobName(),
+                        job.getJobDuration(),
+                        job.getJobDeadline()
+                    );
+                    JOptionPane.showMessageDialog(frame, "Job " + job.getJobID() + " accepted and inserted into database.");
+                });
+    
+                // Reject button: just display a message
+                rejectButton.addActionListener(e -> {
+                    JOptionPane.showMessageDialog(frame, "Job " + job.getJobID() + " was rejected.");
+                });
+    
+                JPanel buttonPanel = new JPanel();
+                buttonPanel.add(acceptButton);
+                buttonPanel.add(rejectButton);
+                panel.add(buttonPanel);
             }
-            jobsArea.setText(jobsOutput.toString());
         }
+    
+        JButton backButton = new JButton("Back");
+        backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        backButton.addActionListener(e -> {
+            frame.getContentPane().removeAll();
+            frame.add(initialPanel, BorderLayout.CENTER);
+            frame.revalidate();
+            frame.repaint();
+        });
+        panel.add(Box.createRigidArea(new Dimension(0, 20)));
+        panel.add(backButton);
+    
+        frame.revalidate();
+        frame.repaint();
     }
+    
 
     public static void main(String[] args) {
         new ControllerScreen();
