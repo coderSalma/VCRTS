@@ -150,6 +150,18 @@ public class VehicleCloudController {
 
                 if (response == JOptionPane.YES_OPTION) {
                     saveToCSV("Vehicles.csv", vehicleData);
+                    
+                    //split vehicle data for sql insert
+                    String ownerID = parts[0];
+                    int vehicleID = Integer.parseInt(parts[1]);
+                    String model = parts[2];
+                    String vin = parts[3];
+                    String residencyTime = parts[4];
+                   
+                    DBConnection.insertVehicle(ownerID, vehicleID, model, vin, residencyTime);
+                
+                    
+                    
                     JOptionPane.showMessageDialog(null, "Your vehicle was approved!");
                 } else {
                     JOptionPane.showMessageDialog(null, "Your vehicle was rejected.");

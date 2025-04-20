@@ -43,15 +43,21 @@ public class DBConnection
         }
     }
 
-    public static void insertVehicle(int ownerId, String model, String arrivalTime, String departureTime) {
+    public static void insertVehicle(String ownerId, int vehicleId, String model, String vin, String residencyTime) {
         String url = "jdbc:mysql://localhost:3306/cus1166VCTRS";
         String username = "cus1166";
         String password = "cus1166";
 
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
-            String sql = "INSERT INTO Vehicles (OwnerID, Model, ArrivalTime, DepartureTime) VALUES (" 
-                       + ownerId + ", '" + model + "', '" + arrivalTime + "', '" + departureTime + "')";
+
+            String sql = "INSERT INTO vehicle (vehicleOwnerID, vehicleID, model, vin, residencyTime) VALUES (" 
+                    + "'" + ownerId + "', "
+                    + vehicleId + ", "
+                    + "'" + model + "', "
+                    + "'" + vin + "', "
+                    + "'" + residencyTime + "')";
+             
             Statement statement = conn.createStatement();
             int row = statement.executeUpdate(sql);
             if (row > 0)
