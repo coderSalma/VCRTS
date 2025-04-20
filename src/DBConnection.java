@@ -17,15 +17,22 @@ public class DBConnection
         }
     }
 
-    public static void insertJob(int clientId, String name, int duration, String deadline) {
+    public static void insertJob(String user, int jobId, int duration, String jobName, String jobInfo, String deadline) {
         String url = "jdbc:mysql://localhost:3306/cus1166VCTRS";
         String username = "cus1166";
         String password = "cus1166";
 
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
-            String sql = "INSERT INTO Jobs (ClientID, Name, Duration, Deadline) VALUES (" 
-                       + clientId + ", '" + name + "', " + duration + ", '" + deadline + "')";
+            
+            String sql = "INSERT INTO job (username, jobId, jobDuration, jobName, jobInfo, jobDeadline) VALUES (" 
+                    + "'" + user + "', "
+                    + jobId + ", "
+                    + duration + ", "
+                    + "'" + jobName + "', "
+                    + "'" + jobInfo + "', "
+                    + "'" + deadline + "')";
+            
             Statement statement = conn.createStatement();
             int row = statement.executeUpdate(sql);
             if (row > 0)

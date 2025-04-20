@@ -102,6 +102,18 @@ public class VehicleCloudController {
                     out.println("JOB_ACCEPTED");
                     out.flush();
                     saveToCSV("Jobs.csv", jobData);
+                    System.out.println(jobData);
+                    
+                    //splitting job data to insert into sql job table
+                    String[] parts = jobData.split(",", -1);
+                        int jobId = Integer.parseInt(parts[0]);
+                        String jobName = parts[1];
+                        String jobInfo = parts[2];
+                        int duration = Integer.parseInt(parts[3]);
+                        String deadline = parts[4];
+                       
+                        DBConnection.insertJob("testusername", jobId, duration, jobName, jobInfo, deadline);
+                    
                     System.out.println("DEBUG: Job approved.");
                 } else {
                     out.println("JOB_REJECTED");
