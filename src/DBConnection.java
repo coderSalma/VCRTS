@@ -17,7 +17,7 @@ public class DBConnection
         }
     }
 
-    public static void insertJob(String user, int jobId, int duration, String jobName, String jobInfo, String deadline) {
+    public static void insertJob(int jobId, int duration, String jobName, String jobInfo, String deadline) {
         String url = "jdbc:mysql://localhost:3306/cus1166VCTRS";
         String username = "cus1166";
         String password = "cus1166";
@@ -25,8 +25,7 @@ public class DBConnection
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
             
-            String sql = "INSERT INTO job (username, jobId, jobDuration, jobName, jobInfo, jobDeadline) VALUES (" 
-                    + "'" + user + "', "
+            String sql = "INSERT INTO job (jobId, jobDuration, jobName, jobInfo, jobDeadline) VALUES (" 
                     + jobId + ", "
                     + duration + ", "
                     + "'" + jobName + "', "

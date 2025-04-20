@@ -112,7 +112,7 @@ public class VehicleCloudController {
                         int duration = Integer.parseInt(parts[3]);
                         String deadline = parts[4];
                        
-                        DBConnection.insertJob("testusername", jobId, duration, jobName, jobInfo, deadline);
+                        DBConnection.insertJob(jobId, duration, jobName, jobInfo, deadline);
                     
                     System.out.println("DEBUG: Job approved.");
                 } else {
