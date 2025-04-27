@@ -8,7 +8,7 @@ import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class VehicleOwner {
+public class VehicleOwner extends JFrame{
 
 	private static final String SERVER_ADDRESS = "localhost";
 	private static final int PORT = 12345;
@@ -62,8 +62,9 @@ public class VehicleOwner {
 		public MainMenuScreen() {
 			frame = new JFrame("Select Vehicle Option");
 			frame.setSize(400, 300);
+			frame.setLocation(-600,300);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setLocationRelativeTo(null);
+			//frame.setLocationRelativeTo(null);
 
 			panel = new JPanel();
 			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));

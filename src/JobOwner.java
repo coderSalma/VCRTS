@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Queue;
 
 
-public class JobOwner {
+public class JobOwner extends JFrame{
 	private String username;
 	private int jobID;
 	private int jobDuration;
@@ -105,8 +105,9 @@ public class JobOwner {
 		public MainMenuScreen(String username) { // Updated constructor
 			frame = new JFrame("Select Job Option");
 			frame.setSize(400, 300);
+			frame.setLocation(-600,300);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setLocationRelativeTo(null);
+			//frame.setLocationRelativeTo(null);
 			frame.getContentPane().setBackground(new Color(204, 229, 255));
 
 			panel = new JPanel();

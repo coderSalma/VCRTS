@@ -28,14 +28,24 @@ public class DashboardScreen extends JFrame {
         vehicleFunction.setMaximumSize(new Dimension(180, 25));
         vehicleFunction.setAlignmentX(Component.CENTER_ALIGNMENT);
         
-        vehicleFunction.addActionListener(e -> VehicleOwner.getMainScreen());
+        
+        //vehicleFunction.addActionListener(e -> VehicleOwner.getMainScreen());
+        
+        vehicleFunction.addActionListener(e -> {
+        	this.dispose();
+        	VehicleOwner.getMainScreen();
+        });
         
         //job owner button
         JButton jobFunction = new JButton("Job Owner Functions");
         jobFunction.setMaximumSize(new Dimension(180, 25));
         jobFunction.setAlignmentX(Component.CENTER_ALIGNMENT);
         
-        jobFunction.addActionListener(e -> new JobOwner(AccountAuthentication.getCurrentAccount().getUsername()));
+        //jobFunction.addActionListener(e -> new JobOwner(AccountAuthentication.getCurrentAccount().getUsername()));
+        jobFunction.addActionListener(e -> {
+        	this.dispose();
+            new JobOwner(AccountAuthentication.getCurrentAccount().getUsername());
+        });
 
         
         panel.add(vehicleFunction);
