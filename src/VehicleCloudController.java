@@ -82,12 +82,18 @@ public class VehicleCloudController {
                         parts.length > 4 ? parts[4] : "N/A"
                     );
 
-                    responseHolder[0] = JOptionPane.showConfirmDialog(
-                        null,
-                        formattedMessage,
-                        "Job Request",
-                        JOptionPane.YES_NO_OPTION
-                    );
+                    responseHolder[0] = JOptionPane.showOptionDialog(
+                    	    null,
+                    	    formattedMessage,
+                    	    "Cloud Controller Job Request",
+                    	    JOptionPane.YES_NO_OPTION,
+                    	    JOptionPane.QUESTION_MESSAGE,
+                    	    null,
+                    	    new String[]{"Accept", "Reject"},
+                    	    "Accept"
+                    	);
+                    
+
                 };
 
                 if (SwingUtilities.isEventDispatchThread()) {
@@ -133,7 +139,7 @@ public class VehicleCloudController {
             SwingUtilities.invokeLater(() -> {
                 String[] parts = vehicleData.split(",", -1);
                 String formattedMessage = String.format(
-                    "Owner ID: %s%nVehicle ID: %s%nModel %s%nVIN %s%nResidency Time(hrs): %s",
+                    "Owner ID: %s%nVehicle ID: %s%nModel: %s%nVIN: %s%nResidency Time(hrs): %s",
                     parts.length > 0 ? parts[0] : "N/A",
                     parts.length > 1 ? parts[1] : "N/A",
                     parts.length > 2 ? parts[2] : "N/A",
@@ -141,12 +147,16 @@ public class VehicleCloudController {
                     parts.length > 4 ? parts[4] : "N/A"
                 );
 
-                int response = JOptionPane.showConfirmDialog(
-                    null,
-                    formattedMessage,
-                    "Vehicle Request",
-                    JOptionPane.YES_NO_OPTION
-                );
+                int response = JOptionPane.showOptionDialog(
+                	    null,
+                	    formattedMessage,
+                	    "Cloud Controller Vehicle Request",
+                	    JOptionPane.YES_NO_OPTION,
+                	    JOptionPane.QUESTION_MESSAGE,
+                	    null,
+                	    new String[]{"Accept", "Reject"},
+                	    "Accept"
+                	);
 
                 if (response == JOptionPane.YES_OPTION) {
                     saveToCSV("Vehicles.csv", vehicleData);
